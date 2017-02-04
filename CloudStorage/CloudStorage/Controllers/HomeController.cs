@@ -11,9 +11,9 @@ namespace CloudStorage.Controllers
     public class HomeController : Controller
     {
         // GET: /<controller>/
-        public string Index()
+        public IActionResult Index()
         {
-            return $"Hello from {nameof(HomeController)}";
+            return Content($"Hello from {nameof(HomeController)}");
         }
     }
 }
