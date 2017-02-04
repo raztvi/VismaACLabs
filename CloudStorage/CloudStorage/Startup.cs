@@ -43,11 +43,13 @@ namespace CloudStorage
                                 IGreeter greeter)
         {
             loggerFactory.AddConsole();
-
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseWelcomePage();
 
             app.Run(async (context) =>
             {
