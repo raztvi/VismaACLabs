@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using CloudStorage.Services;
 using CloudStorage.Services.Implementation;
+using Microsoft.AspNetCore.Routing;
 
 namespace CloudStorage
 {
@@ -59,7 +60,16 @@ namespace CloudStorage
 
             app.UseFileServer();
 
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(ConfigureRoutes);
+
+            app.Run(context => context.Response.WriteAsync("Not found"));
+        }
+
+        private void ConfigureRoutes(IRouteBuilder routeBuilder)
+        {
+            // GET /Home/Index
+
+            routeBuilder.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}");
         }
     }
 }
