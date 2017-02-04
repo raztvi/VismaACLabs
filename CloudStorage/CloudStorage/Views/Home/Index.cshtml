@@ -1,10 +1,22 @@
-﻿@model CloudStorage.Models.FileInfo
+﻿@model IEnumerable<CloudStorage.Models.FileInfo>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Cloud storage</title>
 </head>
 <body>
-    <h2>@Model.FileName</h2>
+    <h2>Welcome</h2>
+
+    <div>
+        @foreach (var fileInfo in Model)
+        {
+            <div>
+                <div>@fileInfo.Id</div>
+                <div>@fileInfo.FileName</div>
+                <div>@fileInfo.FileSizeInBytes</div>
+            </div>
+            <hr/>
+        }
+    </div>
 </body>
 </html>
