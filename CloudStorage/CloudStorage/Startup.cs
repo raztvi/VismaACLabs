@@ -56,8 +56,7 @@ namespace CloudStorage
                 });
             }
 
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
+            app.UseFileServer();
 
             app.UseWelcomePage(new WelcomePageOptions
             {
@@ -66,7 +65,7 @@ namespace CloudStorage
 
             app.Run(async (context) =>
             {
-                throw new Exception("oops!");
+                //throw new Exception("oops!");
                 var message = greeter.GetGreeting();
                 await context.Response.WriteAsync(message);
             });
