@@ -46,7 +46,14 @@ namespace CloudStorage
             
             if (env.IsDevelopment())
             {
-                //app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler(new ExceptionHandlerOptions
+                {
+                    ExceptionHandler = context => context.Response.WriteAsync("Ooops, something went wrong!")
+                });
             }
 
             app.UseWelcomePage(new WelcomePageOptions
