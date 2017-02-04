@@ -56,6 +56,9 @@ namespace CloudStorage
                 });
             }
 
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             app.UseWelcomePage(new WelcomePageOptions
             {
                 Path = "/welcome"
