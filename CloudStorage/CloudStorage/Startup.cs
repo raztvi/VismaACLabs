@@ -46,7 +46,7 @@ namespace CloudStorage
             
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
             }
 
             app.UseWelcomePage(new WelcomePageOptions
@@ -56,6 +56,7 @@ namespace CloudStorage
 
             app.Run(async (context) =>
             {
+                throw new Exception("oops!");
                 var message = greeter.GetGreeting();
                 await context.Response.WriteAsync(message);
             });
