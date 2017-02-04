@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CloudStorage.Models
+namespace CloudStorage.Entities
 {
     public class FileInfo
     {

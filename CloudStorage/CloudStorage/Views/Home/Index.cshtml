@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CloudStorage.Models.FileInfo>
+﻿@model CloudStorage.ViewModels.HomePageViewModel
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -7,8 +7,10 @@
 <body>
     <h2>Welcome</h2>
 
+    <h3>@Model.Message</h3>
+
     <div>
-        @foreach (var fileInfo in Model)
+        @foreach (var fileInfo in Model.FileInfos)
         {
             <div>
                 <div>@fileInfo.Id</div>
