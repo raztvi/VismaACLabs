@@ -49,7 +49,10 @@ namespace CloudStorage
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseWelcomePage();
+            app.UseWelcomePage(new WelcomePageOptions
+            {
+                Path = "/welcome"
+            });
 
             app.Run(async (context) =>
             {
