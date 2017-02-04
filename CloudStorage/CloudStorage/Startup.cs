@@ -62,7 +62,7 @@ namespace CloudStorage
 
             app.UseMvc(ConfigureRoutes);
 
-            app.Run(context => context.Response.WriteAsync("Not found"));
+            app.Run(context => context.Response.WriteAsync($"Not found: {context.Request.Path}"));
         }
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)

@@ -8,17 +8,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CloudStorage.Controllers
 {
-    [Route("about")]
+    [Route("[controller]/[action]")]
     public class AboutController : Controller
     {
         // GET: /<controller>/
-        [Route("")]
         public string Phone()
         {
             return "123-456-789";
         }
 
-        [Route("address")]
         public string Address()
         {
             return "Timisoara, Romania";
