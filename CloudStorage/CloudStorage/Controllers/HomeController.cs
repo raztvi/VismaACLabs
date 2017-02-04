@@ -15,7 +15,7 @@ namespace CloudStorage.Controllers
         public IActionResult Index()
         {
             var model = new FileInfo { Id = Guid.NewGuid(), FileName = "bla.txt", FileSizeInBytes = 2 };
-            return new ObjectResult(model);
+            return View();
         }
     }
 }
