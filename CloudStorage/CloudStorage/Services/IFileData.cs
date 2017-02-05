@@ -9,5 +9,6 @@ namespace CloudStorage.Services
     public interface IFileData
     {
         IEnumerable<FileInfo> GetAll();
+        FileInfo Get(Guid id);
     }
 }

@@ -34,9 +34,16 @@ namespace CloudStorage.Controllers
             return View(model);
         }
 
-        public string Details(Guid id)
+        public IActionResult Details(Guid id)
         {
-            return id.ToString();
+            var model = _fileData.Get(id);
+
+            if(model == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(model);
         }
     }
 }
