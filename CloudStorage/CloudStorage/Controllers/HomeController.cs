@@ -50,6 +50,7 @@ namespace CloudStorage.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Upload(UploadViewModel model)
         {
             if(model != null && ModelState.IsValid)
