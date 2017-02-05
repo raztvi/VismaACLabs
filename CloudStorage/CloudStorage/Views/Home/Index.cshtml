@@ -13,7 +13,10 @@
         @foreach (var fileInfo in Model.FileInfos)
         {
             <div>
-                <div>@fileInfo.Id</div>
+                <div>
+                    <a href="/home/details/@fileInfo.Id">Details manual</a>
+                    @Html.ActionLink("View", "Details", new { id = fileInfo.Id })
+                </div>
                 <div>@fileInfo.FileName</div>
                 <div>@fileInfo.FileSizeInBytes</div>
             </div>
