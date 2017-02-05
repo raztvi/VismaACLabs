@@ -1,6 +1,10 @@
 ﻿@using CloudStorage.Controllers
 @model Core.Entities.FileInfo
 
+@{ 
+    ViewBag.Title = Model.FileName;
+}
+
 <h1>@Model.FileName</h1>
 <div>Id: @Model.Id</div>
 <div>File size in bytes: @Model.FileSizeInBytes</div>
