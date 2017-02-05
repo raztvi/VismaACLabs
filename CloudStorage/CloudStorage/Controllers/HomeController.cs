@@ -33,5 +33,10 @@ namespace CloudStorage.Controllers
 
             return View(model);
         }
+
+        public string Details(Guid id)
+        {
+            return id.ToString();
+        }
     }
 }
