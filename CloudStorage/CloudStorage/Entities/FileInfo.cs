@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CloudStorage.Entities
 {
@@ -10,5 +7,6 @@ namespace CloudStorage.Entities
         public Guid Id { get; set; }
         public string FileName { get; set; }
         public int FileSizeInBytes { get; set; }
+        public FileContentType ContentType { get; set; }
     }
 }

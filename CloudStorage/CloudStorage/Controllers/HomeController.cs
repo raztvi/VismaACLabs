@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CloudStorage.Entities;
 using CloudStorage.Services;
@@ -43,6 +40,31 @@ namespace CloudStorage.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Upload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Upload(UploadViewModel model)
+        {
+            if(model != null && ModelState.IsValid)
+            {
+                var file = new FileInfo
+                {
+                    ContentType = model.ContentType,
+                    FileName = model.FileName,
+                    FileSizeInBytes = (new Random()).Next(10, int.MaxValue)
+                };
+
+                _fileData.Add(file);
+
+                return RedirectToAction(nameof(Details), new { id = file.Id });
+            }
             return View(model);
         }
     }

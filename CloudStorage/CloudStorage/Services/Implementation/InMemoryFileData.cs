@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CloudStorage.Entities;
 
 namespace CloudStorage.Services.Implementation
 {
     public class InMemoryFileData : IFileData
     {
-        private List<FileInfo> _fileInfos;
+        private static List<FileInfo> _fileInfos;
 
-        public InMemoryFileData()
+        static InMemoryFileData()
         {
             _fileInfos = new List<FileInfo>
             {
@@ -19,6 +18,13 @@ namespace CloudStorage.Services.Implementation
                 new FileInfo {Id = new Guid("edcd07a3-1e53-45d1-8e8c-bfa82a310938"), FileName = "index.html", FileSizeInBytes = 443},
                 new FileInfo {Id = new Guid("67b6658e-0775-401e-b76a-93fb85f7200e"), FileName = "hello.pptx", FileSizeInBytes = 54323}
             };
+        }
+
+        public FileInfo Add(FileInfo file)
+        {
+            file.Id = Guid.NewGuid();
+            _fileInfos.Add(file);
+            return file;
         }
 
         public FileInfo Get(Guid id)

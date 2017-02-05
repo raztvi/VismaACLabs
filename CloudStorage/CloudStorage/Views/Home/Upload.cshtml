@@ -1,0 +1,26 @@
+﻿@using CloudStorage.Entities
+@model CloudStorage.Entities.FileInfo
+<div>
+    <h1>Upload</h1>
+    <div>
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(_ => _.Id)
+
+            <div>
+                @Html.LabelFor(_ => _.FileName)
+                @Html.TextBoxFor(_ => _.FileName)
+            </div>
+
+            <div>
+                @Html.LabelFor(_ => _.ContentType)
+                @Html.DropDownListFor(_ => _.ContentType, Html.GetEnumSelectList(typeof(FileContentType)))
+            </div>
+
+            <div>
+                <input type="submit" value="Save"/>
+            </div>
+        }
+
+</div>
+</div>
