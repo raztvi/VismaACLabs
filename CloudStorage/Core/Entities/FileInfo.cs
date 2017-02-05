@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CloudStorage.Entities
+namespace Core.Entities
 {
     public class FileInfo
     {

@@ -7,6 +7,9 @@ using Microsoft.Extensions.Configuration;
 using CloudStorage.Services;
 using CloudStorage.Services.Implementation;
 using Microsoft.AspNetCore.Routing;
+using Core.Services;
+using Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CloudStorage
 {
@@ -32,7 +35,8 @@ namespace CloudStorage
             services.AddMvc();
             services.AddSingleton(Configuration);
             services.AddSingleton<IGreeter, Greeter>();
-            services.AddScoped<IFileData, InMemoryFileData>();
+            services.AddScoped<IFileData, SqlFileData>();
+            services.AddDbContext<CloudStorageDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CloudStorage")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

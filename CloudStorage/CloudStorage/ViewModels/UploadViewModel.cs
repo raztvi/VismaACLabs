@@ -1,4 +1,4 @@
-﻿using CloudStorage.Entities;
+﻿using Core.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace CloudStorage.ViewModels

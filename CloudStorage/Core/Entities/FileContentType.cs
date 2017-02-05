@@ -1,4 +1,4 @@
-﻿namespace CloudStorage.Entities
+﻿namespace Core.Entities
 {
     public enum FileContentType
     {

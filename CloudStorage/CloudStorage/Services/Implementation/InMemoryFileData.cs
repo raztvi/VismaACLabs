@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CloudStorage.Entities;
+using Core.Entities;
+using Core.Services;
 
 namespace CloudStorage.Services.Implementation
 {

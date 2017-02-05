@@ -1,8 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using CloudStorage.Entities;
+using Core.Entities;
 using CloudStorage.Services;
 using CloudStorage.ViewModels;
+using Core.Services;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

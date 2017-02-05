@@ -1,8 +1,8 @@
-﻿using CloudStorage.Entities;
+﻿using Core.Entities;
 using System;
 using System.Collections.Generic;
 
-namespace CloudStorage.Services
+namespace Core.Services
 {
     public interface IFileData
     {
