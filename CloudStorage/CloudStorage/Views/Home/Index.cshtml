@@ -6,13 +6,18 @@
 
 <h2>Welcome</h2>
 
+<environment names="Development">
+    <p>We are debugging!</p>
+</environment>
+
 <div>
     @foreach (var fileInfo in Model.FileInfos)
     {
         <div>
             <div>
-                <a href="/home/details/@fileInfo.Id">Details manual</a>
-                @Html.ActionLink("View", "Details", new { id = fileInfo.Id })
+                <a asp-action="Details" asp-route-id="@fileInfo.Id">Details</a>
+                |
+                <a asp-action="Edit" asp-route-id="@fileInfo.Id">Edit</a>
                 </div>
                 <div>@fileInfo.FileName</div>
                 <div>@fileInfo.FileSizeInBytes</div>

@@ -28,6 +28,10 @@ namespace CloudStorage.Services.Implementation
             return file;
         }
 
+        public void Commit()
+        {
+        }
+
         public FileInfo Get(Guid id)
         {
             return _fileInfos.FirstOrDefault(_ => _.Id == id);

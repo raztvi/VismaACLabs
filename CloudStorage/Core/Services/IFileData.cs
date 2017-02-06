@@ -9,5 +9,6 @@ namespace Core.Services
         IEnumerable<FileInfo> GetAll();
         FileInfo Get(Guid id);
         FileInfo Add(FileInfo file);
+        void Commit();
     }
 }

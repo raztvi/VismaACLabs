@@ -64,10 +64,39 @@ namespace CloudStorage.Controllers
                 };
 
                 _fileData.Add(file);
+                _fileData.Commit();
 
                 return RedirectToAction(nameof(Details), new { id = file.Id });
             }
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(Guid id)
+        {
+            var model = _fileData.Get(id);
+            if(model == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Guid id, UploadViewModel model)
+        {
+            var fileInfo = _fileData.Get(id);
+            if (ModelState.IsValid)
+            {
+                fileInfo.FileName = model.FileName;
+                fileInfo.ContentType = model.ContentType;
+                _fileData.Commit();
+
+                return RedirectToAction(nameof(Details), new { id = fileInfo.Id });
+            }
+
+            return View(fileInfo);
         }
     }
 }

@@ -17,8 +17,12 @@ namespace Data
         public FileInfo Add(FileInfo file)
         {
             _context.Add(file);
-            _context.SaveChanges();
             return file;
+        }
+
+        public void Commit()
+        {
+            _context.SaveChanges();
         }
 
         public FileInfo Get(Guid id)
