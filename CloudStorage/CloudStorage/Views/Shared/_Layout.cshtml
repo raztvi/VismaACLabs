@@ -11,6 +11,8 @@
     </div>
     <footer>
         @RenderSection("footer", required: false)
+        @await Component.InvokeAsync("Greeting")
+
         &copy; Emil Craciun @DateTime.Now.Year
     </footer>
 </body>
