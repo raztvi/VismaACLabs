@@ -1,0 +1,16 @@
+﻿@model FileInfo
+
+<section>
+    <h3>@Model.FileName</h3>
+    <div>
+        Size in bytes: @Model.FileSizeInBytes
+    </div>
+    <div>
+        Content type: @Model.ContentType
+    </div>
+    <div>
+        <a asp-action="Details" asp-route-id="@Model.Id">Details</a>
+        |
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    </div>
+</section>

@@ -1,6 +1,6 @@
 ﻿@model HomePageViewModel
 
-@{ 
+@{
     ViewBag.Title = "Home";
 }
 
@@ -13,16 +13,9 @@
 <div>
     @foreach (var fileInfo in Model.FileInfos)
     {
-        <div>
-            <div>
-                <a asp-action="Details" asp-route-id="@fileInfo.Id">Details</a>
-                |
-                <a asp-action="Edit" asp-route-id="@fileInfo.Id">Edit</a>
-                </div>
-                <div>@fileInfo.FileName</div>
-                <div>@fileInfo.FileSizeInBytes</div>
-            </div>
-            <hr />
+        @Html.Partial("_Summary", fileInfo)
+
+        <hr />
     }
 </div>
 
