@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Routing;
 using Core.Services;
 using Data;
 using Microsoft.EntityFrameworkCore;
+using Data.Seed;
 
 namespace CloudStorage
 {
@@ -37,13 +38,15 @@ namespace CloudStorage
             services.AddSingleton<IGreeter, Greeter>();
             services.AddScoped<IFileData, SqlFileData>();
             services.AddDbContext<CloudStorageDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CloudStorage")));
+            services.AddTransient<CloudStorageSeedData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(  IApplicationBuilder app, 
                                 IHostingEnvironment env, 
                                 ILoggerFactory loggerFactory,
-                                IGreeter greeter)
+                                IGreeter greeter,
+                                CloudStorageSeedData seeder)
         {
             loggerFactory.AddConsole();
             
@@ -64,6 +67,8 @@ namespace CloudStorage
             app.UseMvc(ConfigureRoutes);
 
             app.Run(context => context.Response.WriteAsync($"Not found: {context.Request.Path}"));
+
+            seeder.EnsureSeedData().Wait();
         }
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)
