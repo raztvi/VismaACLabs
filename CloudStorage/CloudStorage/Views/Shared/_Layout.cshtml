@@ -4,16 +4,23 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-theme.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <div>
+    <div class="container">
         @RenderBody()
     </div>
-    <footer>
+    <footer class="container">
         @RenderSection("footer", required: false)
         @await Component.InvokeAsync("Greeting")
 
-        &copy; Emil Craciun @DateTime.Now.Year
+        <p>&copy; Emil Craciun @DateTime.Now.Year</p>
     </footer>
+
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 </body>
 </html>
