@@ -5,6 +5,7 @@ using CloudStorage.Services;
 using CloudStorage.ViewModels;
 using Core.Services;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -74,6 +75,7 @@ namespace CloudStorage.Controllers
             return View(model);
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Edit(Guid id)
         {
@@ -85,6 +87,7 @@ namespace CloudStorage.Controllers
             return View(model);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Guid id, UploadViewModel model)

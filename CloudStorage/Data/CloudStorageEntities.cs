@@ -1,9 +1,10 @@
 ﻿using Core.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data
 {
-    public class CloudStorageDbContext : DbContext
+    public class CloudStorageDbContext : IdentityDbContext<User>
     {
         public DbSet<FileInfo> FileInfos { get; set; }
 

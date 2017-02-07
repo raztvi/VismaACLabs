@@ -11,6 +11,8 @@ using Core.Services;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Data.Seed;
+using Core.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace CloudStorage
 {
@@ -40,6 +42,8 @@ namespace CloudStorage
             services.AddScoped<IFileData, SqlFileData>();
             services.AddDbContext<CloudStorageDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CloudStorage")));
             services.AddTransient<CloudStorageSeedData>();
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<CloudStorageDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +68,8 @@ namespace CloudStorage
             }
 
             app.UseFileServer();
+
+            app.UseIdentity();
 
             app.UseMvc(ConfigureRoutes);
 
