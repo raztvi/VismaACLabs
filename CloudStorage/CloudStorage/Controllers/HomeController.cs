@@ -4,6 +4,7 @@ using Core.Entities;
 using CloudStorage.Services;
 using CloudStorage.ViewModels;
 using Core.Services;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,11 +14,13 @@ namespace CloudStorage.Controllers
     {
         private IFileData _fileData;
         private IGreeter _greeter;
+        private ILogger<HomeController> _logger;
 
-        public HomeController(IFileData fileData, IGreeter greeter)
+        public HomeController(IFileData fileData, IGreeter greeter, ILogger<HomeController> logger)
         {
             _fileData = fileData;
             _greeter = greeter;
+            _logger = logger;
         }
 
         // GET: /<controller>/
