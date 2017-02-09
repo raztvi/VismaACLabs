@@ -73,7 +73,7 @@ namespace CloudStorage
 
             app.UseMvc(ConfigureRoutes);
 
-            app.Run(context => context.Response.WriteAsync($"Not found: {context.Request.Path}"));
+            //app.Run(context => context.Response.WriteAsync($"Not found: {context.Request.Path}"));
 
             seeder.EnsureSeedData().Wait();
         }

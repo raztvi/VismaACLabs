@@ -1,5 +1,4 @@
-﻿@using Core.Entities
-@model FileInfo
+﻿@model UploadViewModel
 
 @{
     ViewBag.Title = "Upload";
@@ -10,8 +9,6 @@
     <div>
         @using (Html.BeginForm())
         {
-            @Html.HiddenFor(_ => _.Id)
-
             <div>
                 @Html.LabelFor(_ => _.FileName)
                 @Html.TextBoxFor(_ => _.FileName)

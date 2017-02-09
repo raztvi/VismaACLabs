@@ -27,11 +27,13 @@
             @RenderSection("footer", required: false)
             @await Component.InvokeAsync("Greeting")
 
-            <p>&copy; Emil Craciun @DateTime.Now.Year</p>
+            <p class="text-center">&copy; Emil Craciun @DateTime.Now.Year</p>
         </footer>
     </div>
 
     <script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 </body>
 </html>
