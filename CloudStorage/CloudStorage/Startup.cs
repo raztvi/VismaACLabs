@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Data.Seed;
 using Core.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Data.Services;
 
 namespace CloudStorage
 {
@@ -41,6 +42,7 @@ namespace CloudStorage
             services.AddSingleton(Configuration);
             services.AddSingleton<IGreeter, Greeter>();
             services.AddScoped<IFileData, SqlFileData>();
+            services.AddScoped<ICompanyData, SqlCompanyData>();
             services.AddDbContext<CloudStorageDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CloudStorage")));
             services.AddTransient<CloudStorageSeedData>();
             services.AddIdentity<User, IdentityRole>()

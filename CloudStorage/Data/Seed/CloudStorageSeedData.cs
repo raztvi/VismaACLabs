@@ -15,6 +15,43 @@ namespace Data.Seed
 
         public async Task EnsureSeedData()
         {
+            await SeedFileInfos();
+            await SeedCompanies();
+        }
+
+        private async Task SeedCompanies()
+        {
+            if (!_context.Companies.Any())
+            {
+                var comp1 = new Company
+                {
+                    ContactEmail = "someone@NoOneCanHearYouScream.com",
+                    ContactPhoneNumber = "1234567890",
+                    MainAddress = "Somewhere over the rainbow",
+                    Name = "Weyland Yutani Corp"
+                };
+                var comp2 = new Company
+                {
+                    ContactEmail = "cr@rsi.com",
+                    ContactPhoneNumber = "1234567890",
+                    MainAddress = "Terra Prime",
+                    Name = "Roberts Space Industries"
+                };
+                var comp3 = new Company
+                {
+                    ContactEmail = "vesimir@wolfs.org",
+                    ContactPhoneNumber = "1234567890",
+                    MainAddress = "Kaer Morhen",
+                    Name = "School of the Wolf"
+                };
+
+                await _context.Companies.AddRangeAsync(comp1, comp2, comp3);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private async Task SeedFileInfos()
+        {
             if (!_context.FileInfos.Any())
             {
                 var fileInfo1 = new FileInfo
@@ -52,7 +89,7 @@ namespace Data.Seed
                     FileSizeInBytes = 1234
                 };
 
-                _context.FileInfos.AddRange(fileInfo1, fileInfo2, fileInfo3, fileInfo4, fileInfo5);
+                await _context.FileInfos.AddRangeAsync(fileInfo1, fileInfo2, fileInfo3, fileInfo4, fileInfo5);
                 await _context.SaveChangesAsync();
             }
         }

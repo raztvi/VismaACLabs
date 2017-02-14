@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Core.Entities;
 
-namespace Data
+namespace Data.Services
 {
     public class SqlFileData : IFileData
     {
