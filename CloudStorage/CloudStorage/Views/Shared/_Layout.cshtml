@@ -26,7 +26,12 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">Cloud Storage</a>
             </div>
-            <div class="navbar-right">
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a asp-controller="Company">Companies</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+            <div class="nav navbar-nav navbar-right">
                 @await Component.InvokeAsync("LoginLogout")
             </div>
         </div>
