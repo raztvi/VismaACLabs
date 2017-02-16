@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,10 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
+using Core.Services;
 
 namespace Data.Services
 {
-    public class AzureBlobService
+    public class AzureBlobService : IBlobService
     {
         private readonly CloudStorageAccount _storageAccount;
         private readonly CloudBlobClient _blobClient;
@@ -193,19 +193,13 @@ namespace Data.Services
         /// <param name="containerName">Container name</param>
         /// <returns>An awaitable <see cref="Task"/></returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="containerName"/> is null or empty string.</exception>
-        public async Task CreateContainer(string containerName)
+        public async Task CreateContainerIfNotExists(string containerName)
         {
             // check parameters
             if (string.IsNullOrWhiteSpace(containerName)) throw new ArgumentNullException(nameof(containerName));
 
-            // get and check container reference
             var container = _blobClient.GetContainerReference(containerName);
-            if (await container.ExistsAsync())
-            {
-                throw new ArgumentException($"Container {container} already exists");
-            }
-
-            await container.CreateAsync();
+            await container.CreateIfNotExistsAsync();
         }
 
         /// <summary>

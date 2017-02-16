@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Threading.Tasks;
 
 namespace Core.Services
@@ -18,7 +15,7 @@ namespace Core.Services
 
         Task<long> GetContainerSize(string containerName);
 
-        Task CreateContainer(string containerName);
+        Task CreateContainerIfNotExists(string containerName);
 
         Task DeleteFolder(string containerName, string folderPath);
 
