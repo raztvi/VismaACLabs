@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{05AC1FF0-370
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{20CFF2E3-52A1-4D9A-A832-E3FE3A73F354}"
 	ProjectSection(SolutionItems) = preProject
+		..\.gitattributes = ..\.gitattributes
+		..\.gitignore = ..\.gitignore
 		global.json = global.json
 	EndProjectSection
 EndProject
@@ -15,6 +17,13 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Core", "src\Core\Core.xproj", "{15323FAA-261C-4D06-A793-68E5EEB1E61B}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Data", "src\Data\Data.xproj", "{D3511C6C-C70D-4581-8F6E-8EA4DAC33C0E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{D32ABD18-AAD9-40A1-9926-F5D9C4585080}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\ASP.NET-Core-Fundamentals-quiz-questions.md = ..\docs\ASP.NET-Core-Fundamentals-quiz-questions.md
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
