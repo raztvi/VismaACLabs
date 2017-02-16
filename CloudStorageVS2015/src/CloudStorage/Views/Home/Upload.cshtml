@@ -1,0 +1,32 @@
+﻿@model UploadViewModel
+
+@{
+    ViewBag.Title = "Upload";
+}
+
+<div>
+    <h1>Upload</h1>
+    <div>
+        @using (Html.BeginForm())
+        {
+            <div>
+                @Html.LabelFor(_ => _.FileName)
+                @Html.TextBoxFor(_ => _.FileName)
+                @Html.ValidationMessageFor(_ => _.FileName)
+            </div>
+
+            <div>
+                @Html.LabelFor(_ => _.ContentType)
+                @Html.DropDownListFor(_ => _.ContentType, Html.GetEnumSelectList(typeof(FileContentType)))
+            </div>
+
+            <div>
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        }
+
+    </div>
+    <div>
+        <a asp-action="@nameof(HomeController.Index)">Home</a>
+    </div>
+</div>

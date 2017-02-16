@@ -1,0 +1,14 @@
+﻿@using CloudStorage.Controllers
+@model FileInfo
+
+@{ 
+    ViewBag.Title = Model.FileName;
+}
+
+<h1>@Model.FileName</h1>
+<div>Id: @Model.Id</div>
+<div>File size in bytes: @Model.FileSizeInBytes</div>
+
+<div>
+    <a asp-action="@nameof(HomeController.Index)">Home</a>
+</div>
