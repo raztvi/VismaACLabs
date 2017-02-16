@@ -41,11 +41,11 @@ namespace Data.Services
         /// <param name="stream">Source stream for blob content</param>
         /// <param name="fileContentType">File content type</param>
         /// <param name="overwrite">Optional parameter that enables overwriting an existing blob</param>
-        /// <returns> <see cref="BlobProperties"/> The uploaded blob's properties.</returns>
+        /// <returns>An awaitable <see cref="Task"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="containerName"/> or <paramref name="blobPath"/> are null or empty strings.</exception>
         /// <exception cref="ArgumentException">Thrown when <paramref name="stream"/> is not readable.</exception>
         /// <exception cref="InvalidOperationException">Thrown when <paramref name="overwrite" /> is set to false and the <paramref name="blobPath"/> references an existing blob.</exception>
-        public async Task<BlobProperties> UploadBlobFromStream(string containerName, string blobPath, Stream stream,
+        public async Task UploadBlobFromStream(string containerName, string blobPath, Stream stream,
             string fileContentType = null, bool overwrite = false)
         {
             // check parameters
@@ -70,7 +70,6 @@ namespace Data.Services
             }
             //retry already configured of Azure Storage API
             await blob.UploadFromStreamAsync(stream);
-            return blob.Properties;
         }
 
         /// <summary>
@@ -97,38 +96,6 @@ namespace Data.Services
             // get blob reference
             var blob = container.GetBlockBlobReference(blobPath);
             await blob.DeleteIfExistsAsync();
-        }
-
-        /// <summary>
-        /// Gets a blobs properties.
-        /// </summary>
-        /// <param name="containerName">Container name</param>
-        /// <param name="blobPath">Blob path inside of the given container</param>
-        /// <returns><see cref="BlobProperties"/> of the blob, or null if blob does not exist</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="containerName"/> or <paramref name="blobPath"/> are null or empty strings.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="containerName"/> container does not exist.</exception>
-        public async Task<BlobProperties> GetBlobProperties(string containerName, string blobPath)
-        {
-            // check parameters
-            if (string.IsNullOrWhiteSpace(containerName)) throw new ArgumentNullException(nameof(containerName));
-            if (string.IsNullOrWhiteSpace(blobPath)) throw new ArgumentNullException(nameof(blobPath));
-
-            // get and check container reference
-            var container = _blobClient.GetContainerReference(containerName);
-            if (!await container.ExistsAsync())
-            {
-                throw new ArgumentException($"Container {container} does not exist");
-            }
-
-            // get blob reference
-            var blob = container.GetBlockBlobReference(blobPath);
-            if (await blob.ExistsAsync())
-            {
-                await blob.FetchAttributesAsync();
-                return blob.Properties;
-            }
-
-            return null;
         }
 
         /// <summary>       
@@ -183,9 +150,11 @@ namespace Data.Services
                 throw new ArgumentException($"Container {container} does not exist");
             }
 
+            BlobContinuationToken continuationToken = null;
             var folder = container.GetDirectoryReference(folderPath);
-            var folderSize =
-                folder.ListBlobs(useFlatBlobListing: true).Sum(x => (x as CloudBlob)?.Properties.Length ?? 0);
+            var folderSize = (await
+                container.ListBlobsSegmentedAsync(string.Empty, true, BlobListingDetails.All, -1, continuationToken, null, null))
+                .Results.Sum(x => (x as CloudBlob)?.Properties.Length ?? 0);
 
             return folderSize;
         }
@@ -203,14 +172,17 @@ namespace Data.Services
             if (string.IsNullOrWhiteSpace(containerName)) throw new ArgumentNullException(nameof(containerName));
 
             // get and check container reference
-            CloudBlobClient container = _blobClient.GetContainerReference(containerName);
+            var container = _blobClient.GetContainerReference(containerName);
             if (!await container.ExistsAsync())
             {
                 throw new ArgumentException($"Container {container} does not exist");
             }
 
-            var containerSize =
-                container.list ListBlobs(useFlatBlobListing: true).Sum(x => (x as CloudBlob)?.Properties.Length ?? 0);
+            BlobContinuationToken continuationToken = null;
+
+            var containerSize = (await
+                container.ListBlobsSegmentedAsync(string.Empty, true, BlobListingDetails.All, -1, continuationToken, null, null)).Results
+                .Sum(x => (x as CloudBlob)?.Properties.Length ?? 0);
 
             return containerSize;
         }
@@ -257,8 +229,11 @@ namespace Data.Services
                 throw new ArgumentException($"Container {container} does not exist");
             }
 
+            BlobContinuationToken continuationToken = null;
             var folder = container.GetDirectoryReference(folderPath);
-            foreach (var blob in folder.ListBlobs(useFlatBlobListing: true))
+            var blobs = (await
+                folder.ListBlobsSegmentedAsync(true, BlobListingDetails.All, -1, continuationToken, null, null)).Results;
+            foreach (var blob in blobs)
             {
                 await container.GetBlockBlobReference(((CloudBlockBlob)blob).Name).DeleteIfExistsAsync();
             }
@@ -280,7 +255,16 @@ namespace Data.Services
             await container.DeleteIfExistsAsync();
         }
 
-
+        /// <summary>
+        /// Get SAS url
+        /// </summary>
+        /// <param name="containerName">Container name</param>
+        /// <param name="blobPath">Blob path</param>
+        /// <param name="minutesToLive">Minutes the SAS url is valid. Must be a positive, non zero integer.</param>
+        /// <returns>The SAS url</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException">When the container specified by <paramref name="containerName"/> does not exist, or when
+        /// <paramref name="minutesToLive"/> is a negative or zero integer.</exception>
         public async Task<string> GetTemporaryUrl(string containerName, string blobPath, int minutesToLive = 10)
         {
             // check parameters
