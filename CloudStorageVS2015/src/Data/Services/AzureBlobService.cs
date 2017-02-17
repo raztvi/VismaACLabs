@@ -12,7 +12,6 @@ namespace Data.Services
 {
     public class AzureBlobService : IBlobService
     {
-        private readonly CloudStorageAccount _storageAccount;
         private readonly CloudBlobClient _blobClient;
 
         public AzureBlobService(IConfiguration configuration)
@@ -22,10 +21,10 @@ namespace Data.Services
             if (string.IsNullOrWhiteSpace(storageConnectionString)) throw new Exception("Azure storage connection string is missing.");
 
             // Get account
-            _storageAccount = CloudStorageAccount.Parse(storageConnectionString);
+            var storageAccount = CloudStorageAccount.Parse(storageConnectionString);
 
             // Get and set up client
-            _blobClient = _storageAccount.CreateCloudBlobClient();
+            _blobClient = storageAccount.CreateCloudBlobClient();
             _blobClient.DefaultRequestOptions.StoreBlobContentMD5 = true;
             _blobClient.DefaultRequestOptions.SingleBlobUploadThresholdInBytes = 4194304; //4 MiB, current maximum
             //no need for parallelism, the input is being streamed (serially) by the client
@@ -150,10 +149,9 @@ namespace Data.Services
                 throw new ArgumentException($"Container {container} does not exist");
             }
 
-            BlobContinuationToken continuationToken = null;
             var folder = container.GetDirectoryReference(folderPath);
             var folderSize = (await
-                container.ListBlobsSegmentedAsync(string.Empty, true, BlobListingDetails.All, -1, continuationToken, null, null))
+                folder.ListBlobsSegmentedAsync(true, BlobListingDetails.All, -1, null, null, null))
                 .Results.Sum(x => (x as CloudBlob)?.Properties.Length ?? 0);
 
             return folderSize;
@@ -178,10 +176,8 @@ namespace Data.Services
                 throw new ArgumentException($"Container {container} does not exist");
             }
 
-            BlobContinuationToken continuationToken = null;
-
             var containerSize = (await
-                container.ListBlobsSegmentedAsync(string.Empty, true, BlobListingDetails.All, -1, continuationToken, null, null)).Results
+                container.ListBlobsSegmentedAsync(string.Empty, true, BlobListingDetails.All, -1, null, null, null)).Results
                 .Sum(x => (x as CloudBlob)?.Properties.Length ?? 0);
 
             return containerSize;
@@ -223,10 +219,9 @@ namespace Data.Services
                 throw new ArgumentException($"Container {container} does not exist");
             }
 
-            BlobContinuationToken continuationToken = null;
             var folder = container.GetDirectoryReference(folderPath);
             var blobs = (await
-                folder.ListBlobsSegmentedAsync(true, BlobListingDetails.All, -1, continuationToken, null, null)).Results;
+                folder.ListBlobsSegmentedAsync(true, BlobListingDetails.All, -1, null, null, null)).Results;
             foreach (var blob in blobs)
             {
                 await container.GetBlockBlobReference(((CloudBlockBlob)blob).Name).DeleteIfExistsAsync();

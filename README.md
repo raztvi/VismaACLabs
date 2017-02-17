@@ -27,3 +27,6 @@ Hands on lab application for a course for students
 - use azure storage
 - use sql local db
 - write some unit tests
+
+
+**Note: this will NOT be deployable to Linux because of it's dependency to WindowsAzure.Storage nuget package**
