@@ -15,8 +15,8 @@ Hands on lab application for a course for students
 
 ### As an admin I can
 - [x] see a list of all available companies
-- [ ] create a new company
-- [ ] edit an existing company
+- [x] create a new company
+- [x] edit an existing company
 - [x] see all uploaded files
 - [x] edit any file or metadata
 - [x] delete any file 
