@@ -6,7 +6,9 @@ namespace Core.Entities
     {
         public Guid Id { get; set; }
         public string FileName { get; set; }
-        public int FileSizeInBytes { get; set; }
+        public long FileSizeInBytes { get; set; }
         public FileContentType ContentType { get; set; }
+        public string FileContentType { get; set; }
+        public string ContainerName { get; set; }
     }
 }

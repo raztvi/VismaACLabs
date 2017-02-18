@@ -9,9 +9,10 @@ using Core.Entities;
 namespace Data.Migrations
 {
     [DbContext(typeof(CloudStorageDbContext))]
-    partial class CloudStorageDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170218153623_FileInfo_Added_ContainerName")]
+    partial class FileInfo_Added_ContainerName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -44,11 +45,9 @@ namespace Data.Migrations
 
                     b.Property<int>("ContentType");
 
-                    b.Property<string>("FileContentType");
-
                     b.Property<string>("FileName");
 
-                    b.Property<long>("FileSizeInBytes");
+                    b.Property<int>("FileSizeInBytes");
 
                     b.HasKey("Id");
 

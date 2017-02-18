@@ -25,6 +25,14 @@ namespace Data.Services
             _context.SaveChanges();
         }
 
+        public void Delete(FileInfo fileInfo)
+        {
+            if(fileInfo != null)
+            {
+                _context.FileInfos.Remove(fileInfo);
+            }
+        }
+
         public FileInfo Get(Guid id)
         {
             return _context.FileInfos.Find(id);

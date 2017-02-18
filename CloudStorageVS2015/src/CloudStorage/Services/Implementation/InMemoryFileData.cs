@@ -32,6 +32,11 @@ namespace CloudStorage.Services.Implementation
         {
         }
 
+        public void Delete(FileInfo fileInfo)
+        {
+            throw new NotImplementedException();
+        }
+
         public FileInfo Get(Guid id)
         {
             return _fileInfos.FirstOrDefault(_ => _.Id == id);

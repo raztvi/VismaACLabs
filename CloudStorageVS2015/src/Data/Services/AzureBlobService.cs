@@ -151,7 +151,7 @@ namespace Data.Services
 
             var folder = container.GetDirectoryReference(folderPath);
             var folderSize = (await
-                folder.ListBlobsSegmentedAsync(true, BlobListingDetails.All, -1, null, null, null))
+                folder.ListBlobsSegmentedAsync(true, BlobListingDetails.All, null, null, null, null))
                 .Results.Sum(x => (x as CloudBlob)?.Properties.Length ?? 0);
 
             return folderSize;
@@ -177,7 +177,7 @@ namespace Data.Services
             }
 
             var containerSize = (await
-                container.ListBlobsSegmentedAsync(string.Empty, true, BlobListingDetails.All, -1, null, null, null)).Results
+                container.ListBlobsSegmentedAsync(string.Empty, true, BlobListingDetails.All, null, null, null, null)).Results
                 .Sum(x => (x as CloudBlob)?.Properties.Length ?? 0);
 
             return containerSize;

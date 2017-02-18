@@ -9,14 +9,12 @@ using System.Threading.Tasks;
 
 namespace CloudStorage.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private SignInManager<User> _signInManager;
-        private UserManager<User> _userManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager) : base(userManager)
         {
-            _userManager = userManager;
             _signInManager = signInManager;
         }
 

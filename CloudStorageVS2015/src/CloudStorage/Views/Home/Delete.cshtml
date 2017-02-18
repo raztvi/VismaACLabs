@@ -1,0 +1,20 @@
+﻿@using CloudStorage.Controllers
+@model FileInfo
+
+@{ 
+    ViewBag.Title = Model.FileName;
+}
+
+<h1>Are you sure you want to delete the following file: "@Model.FileName"?</h1>
+<div>Id: @Model.Id</div>
+<div>File size in bytes: @Model.FileSizeInBytes</div>
+
+<form method="post" asp-action="Delete">
+    <input type="hidden" asp-for="Id" value="@Model.Id" />
+    <input type="submit" value="Yes" class="btn btn-primary" />
+    <a asp-action="Index" class="btn btn-primary">No</a>
+</form>
+
+<div>
+    <a asp-action="@nameof(HomeController.Index)">Home</a>
+</div>
