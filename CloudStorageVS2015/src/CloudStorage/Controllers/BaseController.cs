@@ -7,11 +7,11 @@ namespace CloudStorage.Controllers
 {
     public class BaseController : Controller
     {
-        protected UserManager<User> _userManager;
+        protected UserManager<User> UserManager;
 
         public BaseController(UserManager<User> userManager)
         {
-            _userManager = userManager;
+            UserManager = userManager;
         }
 
         [NonAction]
@@ -21,7 +21,7 @@ namespace CloudStorage.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
-                result = await _userManager.FindByNameAsync(User.Identity.Name);
+                result = await UserManager.FindByNameAsync(User.Identity.Name);
             }
 
             return result;

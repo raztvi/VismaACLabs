@@ -14,7 +14,7 @@ namespace CloudStorage.ViewModels
         public string Password { get; set; }
         [Required, DataType(DataType.Password), Compare(nameof(Password))]
         public string ConfirmPassword { get; set; }
-        //[Required]
+        [Required]
         public Guid CompanyId { get; set; }
     }
 }

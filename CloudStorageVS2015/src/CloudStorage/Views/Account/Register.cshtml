@@ -13,6 +13,12 @@
         <input asp-for="Username" />
         <span asp-validation-for="Username"></span>
     </div>
+    
+    <div>
+        <label asp-for="CompanyId"></label>
+        <select asp-for="CompanyId" asp-items="@(new SelectList(ViewBag.Companies, nameof(Company.Id), nameof(Company.Name)))"></select>
+        <span asp-validation-for="Password"></span>
+    </div>
 
     <div>
         <label asp-for="Password"></label>

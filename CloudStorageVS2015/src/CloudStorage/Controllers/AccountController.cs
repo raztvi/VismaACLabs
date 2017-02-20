@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Core.Services;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,16 +12,19 @@ namespace CloudStorage.Controllers
 {
     public class AccountController : BaseController
     {
-        private SignInManager<User> _signInManager;
+        private readonly SignInManager<User> _signInManager;
+        ICompanyData _companyData;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager) : base(userManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ICompanyData companyData) : base(userManager)
         {
             _signInManager = signInManager;
+            _companyData = companyData;
         }
 
         [HttpGet]
         public IActionResult Register()
         {
+            ViewBag.Companies = _companyData.GetAll();
             return View();
         }
 
@@ -33,9 +37,9 @@ namespace CloudStorage.Controllers
                 var user = new User
                 {
                     UserName = model.Username,
-                    CompanyId = Guid.Empty
+                    CompanyId = model.CompanyId
                 };
-                var createResult = await _userManager.CreateAsync(user, model.Password);
+                var createResult = await UserManager.CreateAsync(user, model.Password);
 
                 if(createResult.Succeeded)
                 {

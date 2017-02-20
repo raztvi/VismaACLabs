@@ -3,7 +3,7 @@ Hands on lab application for a course for students
 
 
 ### As a registered user I can
-- [ ] register an account on the application and associate it with an existing company
+- [x] register an account on the application and associate it with an existing company
 - [ ] see a list of files uploaded by users in my company
 - [ ] download any file from the above list
 - [ ] edit the metadata of any file from above
