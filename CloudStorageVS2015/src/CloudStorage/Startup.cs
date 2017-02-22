@@ -71,6 +71,13 @@ namespace CloudStorage
                 // User settings
                 options.User.RequireUniqueEmail = true;
             });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdministratorClaim", policy =>
+                {
+                    policy.RequireClaim("UserType", "Administrator");
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -80,16 +80,13 @@ namespace CloudStorage.Controllers
                         if (!currentUser.Claims.Contains(
                                new IdentityUserClaim<string> {ClaimType = "UserType", ClaimValue = "Administrator" }))
                         {
-                            await UserManager.AddClaimsAsync(currentUser, new List<Claim>
+                            var claimResult = await UserManager.AddClaimsAsync(currentUser, new List<Claim>
                             {
                                 new Claim("UserType", "Administrator")
                             });
                         }
-
-                        if (!currentUser.Roles.Contains(new IdentityUserRole<string>
-                            {
-                                RoleId = "Admin"
-                            }))
+                        
+                        if (!await UserManager.IsInRoleAsync(currentUser, "Admin"))
                         {
                             if (!await _roleManager.RoleExistsAsync("Admin"))
                             {
@@ -102,8 +99,8 @@ namespace CloudStorage.Controllers
                                     // yaaay!        
                                 }
                             }
-
-                            await UserManager.AddToRolesAsync(currentUser, new[] { "Admin" });
+                            
+                            var roleAddResult = await UserManager.AddToRoleAsync(currentUser,  "Admin" );
                         }
                     }
 
@@ -127,6 +124,12 @@ namespace CloudStorage.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenied(string returnUrl = null)
+        {
+            return View((object)returnUrl);
         }
     }
 }

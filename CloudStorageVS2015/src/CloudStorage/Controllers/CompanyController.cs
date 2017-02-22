@@ -29,6 +29,7 @@ namespace CloudStorage.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(Guid id)
         {
             var company = _companyData.Get(id);
@@ -40,6 +41,7 @@ namespace CloudStorage.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(Guid id, CreateCompanyViewModel model)
         {
             var company = _companyData.Get(id);
@@ -59,12 +61,14 @@ namespace CloudStorage.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdministratorClaim")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost, ValidateAntiForgeryToken]
+        [Authorize(Policy = "AdministratorClaim")]
         public IActionResult Create(CreateCompanyViewModel model)
         {
             if (ModelState.IsValid)
