@@ -1,4 +1,6 @@
-﻿@model RegisterUserViewModel
+﻿@using Core.Services
+@model RegisterUserViewModel
+@inject ICompanyData CompanyData
 
 @{ 
     ViewBag.Title = "Register";
@@ -15,8 +17,14 @@
     </div>
     
     <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+
+    <div>
         <label asp-for="CompanyId"></label>
-        <select asp-for="CompanyId" asp-items="@(new SelectList(ViewBag.Companies, nameof(Company.Id), nameof(Company.Name)))"></select>
+        <select asp-for="CompanyId" asp-items="@(new SelectList(CompanyData.GetAll(), nameof(Company.Id), nameof(Company.Name)))"></select>
         <span asp-validation-for="Password"></span>
     </div>
 

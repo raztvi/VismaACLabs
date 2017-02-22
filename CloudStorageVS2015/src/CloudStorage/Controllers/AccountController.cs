@@ -13,7 +13,7 @@ namespace CloudStorage.Controllers
     public class AccountController : BaseController
     {
         private readonly SignInManager<User> _signInManager;
-        ICompanyData _companyData;
+        private readonly ICompanyData _companyData;
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ICompanyData companyData) : base(userManager)
         {
@@ -24,7 +24,6 @@ namespace CloudStorage.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            ViewBag.Companies = _companyData.GetAll();
             return View();
         }
 
@@ -37,7 +36,8 @@ namespace CloudStorage.Controllers
                 var user = new User
                 {
                     UserName = model.Username,
-                    CompanyId = model.CompanyId
+                    CompanyId = model.CompanyId,
+                    Email = model.Email
                 };
                 var createResult = await UserManager.CreateAsync(user, model.Password);
 
@@ -70,7 +70,7 @@ namespace CloudStorage.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
-                if (result.Succeeded)
+                if (result.Succeeded && !result.IsLockedOut)
                 {
                     if (Url.IsLocalUrl(model.ReturnUrl))
                     {
