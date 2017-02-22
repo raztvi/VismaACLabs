@@ -4,16 +4,13 @@ using Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CloudStorage.Controllers
 {
     [Authorize]
     public class CompanyController : Controller
     {
-        ICompanyData _companyData;
+        readonly ICompanyData _companyData;
 
         public CompanyController(ICompanyData companyData)
         {
