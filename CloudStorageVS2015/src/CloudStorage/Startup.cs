@@ -15,6 +15,7 @@ using Data.Seed;
 using Core.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Data.Services;
+using Newtonsoft.Json.Serialization;
 
 namespace CloudStorage
 {
@@ -39,7 +40,9 @@ namespace CloudStorage
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLogging();
-            services.AddMvc();
+            services.AddMvc()
+                    .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+            services.AddSignalR(options => options.Hubs.EnableDetailedErrors = true);
             services.AddSingleton(Configuration);
             services.AddSingleton<IGreeter, Greeter>();
             services.AddScoped<IFileData, SqlFileData>();
@@ -106,6 +109,10 @@ namespace CloudStorage
             app.UseIdentity();
 
             app.UseMvc(ConfigureRoutes);
+
+            app.UseWebSockets();
+
+            app.UseSignalR();
 
             //app.Run(context => context.Response.WriteAsync($"Not found: {context.Request.Path}"));
 

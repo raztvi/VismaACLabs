@@ -46,6 +46,8 @@
             <p class="text-center">&copy; Emil Craciun @DateTime.Now.Year</p>
         </footer>
     </div>
+    
+    
 
     <!-- https://asp.net/ajax/cdn -->
     <environment names="Development">
@@ -53,20 +55,26 @@
         <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
         <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script type="text/javascript" src="~/lib/signalr/jquery.signalR.js"></script>
     </environment>
-    <environment names="Staging, Production">
-        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js" 
-                asp-fallback-test="window.jQuery" 
-                asp-fallback-src="~/lib/jquery/dist/jquery.js"></script>
-        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js" 
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal" 
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js" 
-                asp-fallback-test="window.jQuery && window.jQuery.validation" 
-                asp-fallback-src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js" 
-                asp-fallback-test="window.jQuery && window.jQuery.validation && window.jQuery.validation.unobtrusive" 
-                asp-fallback-src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-    </environment>
+<environment names="Staging, Production">
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js" 
+            asp-fallback-test="window.jQuery" 
+            asp-fallback-src="~/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js" 
+            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal" 
+            asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js" 
+            asp-fallback-test="window.jQuery && window.jQuery.validation" 
+            asp-fallback-src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js" 
+            asp-fallback-test="window.jQuery && window.jQuery.validation && window.jQuery.validation.unobtrusive" 
+            asp-fallback-src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.1.min.js"
+            asp-fallback-test="window.jQuery" 
+            asp-fallback-src="~/lib/signalr/jquery.signalR.js"></script>
+</environment>
+    
+    @RenderSection("scripts", required:false)
 </body>
 </html>

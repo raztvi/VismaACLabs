@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Core.Services;
+using CloudStorage.Hubs;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,11 +18,14 @@ namespace CloudStorage.Controllers
     {
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IConnectionManager _connectionManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager) : base(userManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, 
+            RoleManager<IdentityRole> roleManager, IConnectionManager connectionManager) : base(userManager)
         {
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _connectionManager = connectionManager;
         }
 
         [HttpGet]
@@ -47,6 +50,7 @@ namespace CloudStorage.Controllers
 
                 if (createResult.Succeeded)
                 {
+                    //_connectionManager.GetHubContext<FileOperationsHub>().Groups.Add()
                     await _signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Home");
                 }
