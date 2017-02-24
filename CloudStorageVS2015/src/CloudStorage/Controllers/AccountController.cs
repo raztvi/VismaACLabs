@@ -78,6 +78,7 @@ namespace CloudStorage.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
                 if (result.Succeeded && !result.IsLockedOut)
                 {
+                    // quick patch work
                     if (model.Username.Equals("Mili", StringComparison.OrdinalIgnoreCase))
                     {
                         var currentUser = await UserManager.FindByNameAsync(model.Username);
@@ -89,7 +90,16 @@ namespace CloudStorage.Controllers
                                 new Claim("UserType", "Administrator")
                             });
                         }
-                        
+
+                        if (!currentUser.Claims.Contains(
+                               new IdentityUserClaim<string> { ClaimType = "Company"}))
+                        {
+                            var claimResult = await UserManager.AddClaimsAsync(currentUser, new List<Claim>
+                            {
+                                new Claim("Company", currentUser.CompanyId.ToString())
+                            });
+                        }
+
                         if (!await UserManager.IsInRoleAsync(currentUser, "Admin"))
                         {
                             if (!await _roleManager.RoleExistsAsync("Admin"))
