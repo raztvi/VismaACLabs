@@ -26,6 +26,7 @@ namespace CloudStorage.Hubs
             if (entry != null)
             {
                 CompanyUsers.Remove(entry);
+                Groups.Remove(Context.ConnectionId, entry.CompanyId);
             }
             return base.OnDisconnected(stopCalled);
         }
@@ -53,12 +54,7 @@ namespace CloudStorage.Hubs
                 var companyId = user.Claims.FirstOrDefault(_ => _.Type == "Company")?.Value;
                 var existingEntry = CompanyUsers.FirstOrDefault(_ => _.Username.Equals(user.Identity.Name,
                     StringComparison.OrdinalIgnoreCase));
-                if (existingEntry != null)
-                {
-                    existingEntry.UserConnectionId = Context.ConnectionId;
-                    existingEntry.CompanyId = companyId;
-                }
-                else
+                if (existingEntry == null)
                 {
                     CompanyUsers.Add(new CompanyUser
                     {
@@ -66,6 +62,8 @@ namespace CloudStorage.Hubs
                         Username = user.Identity.Name,
                         UserConnectionId = Context.ConnectionId
                     });
+
+                    Groups.Add(Context.ConnectionId, companyId);
                 }
             }
         }

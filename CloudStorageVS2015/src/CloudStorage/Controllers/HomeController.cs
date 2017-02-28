@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Core.Entities;
 using CloudStorage.Services;
@@ -8,6 +9,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
+using CloudStorage.Hubs;
+using Core.Constants;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,18 +19,20 @@ namespace CloudStorage.Controllers
 {
     public class HomeController : BaseController
     {
-        private IFileData _fileData;
-        private IGreeter _greeter;
+        private readonly IFileData _fileData;
+        private readonly IGreeter _greeter;
         private ILogger<HomeController> _logger;
-        private IBlobService _blobService;
+        private readonly IBlobService _blobService;
+        private readonly IConnectionManager _connectionManager;
 
         public HomeController(IFileData fileData, IGreeter greeter, ILogger<HomeController> logger, IBlobService blobService,
-            UserManager<User> userManager) : base(userManager)
+            UserManager<User> userManager, IConnectionManager connectionManager) : base(userManager)
         {
             _fileData = fileData;
             _greeter = greeter;
             _logger = logger;
             _blobService = blobService;
+            _connectionManager = connectionManager;
         }
 
         // GET: /<controller>/
@@ -87,6 +93,8 @@ namespace CloudStorage.Controllers
                     _fileData.Add(file);
                     _fileData.Commit();
 
+                    SendFileNotification(FileOperations.Uploaded, model.FileName, user.CompanyId.ToString());
+
                     return RedirectToAction(nameof(Details), new { id = file.Id });
                 }
             }
@@ -116,6 +124,9 @@ namespace CloudStorage.Controllers
                 fileInfo.FileName = model.FileName;
                 fileInfo.ContentType = model.ContentType;
                 _fileData.Commit();
+
+                SendFileNotification(FileOperations.ModifiedMetadata, model.FileName, 
+                    User.Claims.FirstOrDefault(_ => _.Type.Equals(AuthConstants.CompanyClaim)).Value);
 
                 return RedirectToAction(nameof(Details), new { id = fileInfo.Id });
             }
@@ -163,9 +174,20 @@ namespace CloudStorage.Controllers
                 }
                 _fileData.Delete(file);
                 _fileData.Commit();
+                SendFileNotification(FileOperations.Deleted, file.FileName,
+                    User.Claims.FirstOrDefault(_ => _.Type.Equals(AuthConstants.CompanyClaim)).Value);
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+
+        private void SendFileNotification(string operation, string fileName, string companyId)
+        {
+            var hubContext = _connectionManager.GetHubContext<FileOperationsHub>();
+
+            hubContext.Clients.Group(companyId /*, Context.ConnectionId" */)
+                .fileModified($"{User.Identity.Name} executed the following operation {operation} on the following file: {fileName}");
         }
     }
 }
