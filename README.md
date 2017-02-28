@@ -10,7 +10,7 @@ Hands on lab application for a course for students
 - [ ] edit the contents of any file from above (re-upload)
 - [ ] delete a file from the above list
 - [x] upload a new file along with metadata
-- [ ] be notified in real time when someone from my company uploads a new file
+- [x] be notified in real time when someone from my company uploads a new file
 
 
 ## As an admin I can
