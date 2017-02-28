@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using CloudStorage.Services;
 using CloudStorage.Services.Implementation;
+using Core.Constants;
 using Microsoft.AspNetCore.Routing;
 using Core.Services;
 using Data;
@@ -76,9 +77,9 @@ namespace CloudStorage
             });
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("AdministratorClaim", policy =>
+                options.AddPolicy(AuthConstants.AdministratorClaimPolicy, policy =>
                 {
-                    policy.RequireClaim("UserType", "Administrator");
+                    policy.RequireClaim(AuthConstants.UserTypeClaim, AuthConstants.AdministratorClaimType);
                 });
             });
         }

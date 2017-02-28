@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using CloudStorage.Hubs;
+using Core.Constants;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.SignalR.Infrastructure;
 
@@ -83,30 +84,30 @@ namespace CloudStorage.Controllers
                     {
                         var currentUser = await UserManager.FindByNameAsync(model.Username);
                         if (!currentUser.Claims.Contains(
-                               new IdentityUserClaim<string> {ClaimType = "UserType", ClaimValue = "Administrator" }))
+                               new IdentityUserClaim<string> {ClaimType = AuthConstants.UserTypeClaim, ClaimValue = AuthConstants.AdministratorClaimType }))
                         {
                             var claimResult = await UserManager.AddClaimsAsync(currentUser, new List<Claim>
                             {
-                                new Claim("UserType", "Administrator")
+                                new Claim(AuthConstants.UserTypeClaim, AuthConstants.AdministratorClaimType)
                             });
                         }
 
                         if (!currentUser.Claims.Contains(
-                               new IdentityUserClaim<string> { ClaimType = "Company"}))
+                               new IdentityUserClaim<string> { ClaimType = AuthConstants.CompanyClaim}))
                         {
                             var claimResult = await UserManager.AddClaimsAsync(currentUser, new List<Claim>
                             {
-                                new Claim("Company", currentUser.CompanyId.ToString())
+                                new Claim(AuthConstants.CompanyClaim, currentUser.CompanyId.ToString())
                             });
                         }
 
-                        if (!await UserManager.IsInRoleAsync(currentUser, "Admin"))
+                        if (!await UserManager.IsInRoleAsync(currentUser, AuthConstants.AdminRole))
                         {
-                            if (!await _roleManager.RoleExistsAsync("Admin"))
+                            if (!await _roleManager.RoleExistsAsync(AuthConstants.AdminRole))
                             {
                                 var roleResult = await _roleManager.CreateAsync(new IdentityRole
                                 {
-                                    Name = "Admin"
+                                    Name = AuthConstants.AdminRole
                                 });
                                 if (roleResult.Succeeded)
                                 {
@@ -114,7 +115,7 @@ namespace CloudStorage.Controllers
                                 }
                             }
                             
-                            var roleAddResult = await UserManager.AddToRoleAsync(currentUser,  "Admin" );
+                            var roleAddResult = await UserManager.AddToRoleAsync(currentUser,  AuthConstants.AdminRole );
                         }
                     }
 
