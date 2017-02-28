@@ -26,6 +26,7 @@ Hands on lab application for a course for students
 ## As a developer I will
 - [x] use azure storage
 - [x] use sql local db
+- [x] use SignalR
 - [ ] write some unit tests
 
 
