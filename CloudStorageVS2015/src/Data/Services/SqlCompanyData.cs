@@ -1,13 +1,13 @@
-﻿using Core.Services;
+﻿using System;
 using System.Collections.Generic;
 using Core.Entities;
-using System;
+using Core.Services;
 
 namespace Data.Services
 {
     public class SqlCompanyData : ICompanyData
     {
-        private CloudStorageDbContext _context;
+        private readonly CloudStorageDbContext _context;
 
         public SqlCompanyData(CloudStorageDbContext context)
         {

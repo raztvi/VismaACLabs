@@ -1,12 +1,12 @@
-﻿using Core.Entities;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Core.Entities;
 
 namespace Data.Seed
 {
     public class CloudStorageSeedData
     {
-        private CloudStorageDbContext _context;
+        private readonly CloudStorageDbContext _context;
 
         public CloudStorageSeedData(CloudStorageDbContext context)
         {

@@ -6,26 +6,26 @@
         <form method="post" asp-action="Create" asp-antiforgery="true">
             <div class="form-group">
                 <label asp-for="Name"></label>
-                <input type="text" asp-for="Name" />
+                <input type="text" asp-for="Name"/>
                 <span asp-validation-for="Name"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ContactEmail"></label>
-                <input type="email" asp-for="ContactEmail" />
+                <input type="email" asp-for="ContactEmail"/>
                 <span asp-validation-for="ContactEmail"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ContactPhoneNumber"></label>
-                <input type="tel" asp-for="ContactPhoneNumber" />
+                <input type="tel" asp-for="ContactPhoneNumber"/>
                 <span asp-validation-for="ContactPhoneNumber"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MainAddress"></label>
-                <input type="text" asp-for="MainAddress" />
+                <input type="text" asp-for="MainAddress"/>
                 <span asp-validation-for="MainAddress"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary"/>
             </div>
         </form>
     </div>

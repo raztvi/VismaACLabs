@@ -5,7 +5,8 @@ namespace Core.Services
 {
     public interface IBlobService
     {
-        Task UploadBlobFromStream(string containerName, string blobPath, Stream stream, string fileContentType = null, bool overwrite = false);
+        Task UploadBlobFromStream(string containerName, string blobPath, Stream stream, string fileContentType = null,
+            bool overwrite = false);
 
         Task DeleteBlob(string containerName, string blobPath);
 

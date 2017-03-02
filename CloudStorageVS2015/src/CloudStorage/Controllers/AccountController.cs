@@ -1,13 +1,13 @@
-﻿using CloudStorage.ViewModels;
-using Core.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using CloudStorage.ViewModels;
 using Core.Constants;
+using Core.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR.Infrastructure;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -16,11 +16,11 @@ namespace CloudStorage.Controllers
 {
     public class AccountController : BaseController
     {
-        private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConnectionManager _connectionManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, 
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager,
             RoleManager<IdentityRole> roleManager, IConnectionManager connectionManager) : base(userManager)
         {
             _signInManager = signInManager;
@@ -56,9 +56,7 @@ namespace CloudStorage.Controllers
                 }
 
                 foreach (var error in createResult.Errors)
-                {
                     ModelState.AddModelError("", error.Description);
-                }
             }
 
             return View(model);
@@ -70,12 +68,14 @@ namespace CloudStorage.Controllers
             return View();
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
+                var result =
+                    await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
                 if (result.Succeeded && !result.IsLockedOut)
                 {
                     // quick patch work
@@ -83,7 +83,11 @@ namespace CloudStorage.Controllers
                     {
                         var currentUser = await UserManager.FindByNameAsync(model.Username);
                         if (!currentUser.Claims.Contains(
-                               new IdentityUserClaim<string> {ClaimType = AuthConstants.UserTypeClaim, ClaimValue = AuthConstants.AdministratorClaimType }))
+                            new IdentityUserClaim<string>
+                            {
+                                ClaimType = AuthConstants.UserTypeClaim,
+                                ClaimValue = AuthConstants.AdministratorClaimType
+                            }))
                         {
                             var claimResult = await UserManager.AddClaimsAsync(currentUser, new List<Claim>
                             {
@@ -92,7 +96,7 @@ namespace CloudStorage.Controllers
                         }
 
                         if (!currentUser.Claims.Contains(
-                               new IdentityUserClaim<string> { ClaimType = AuthConstants.CompanyClaim}))
+                            new IdentityUserClaim<string> {ClaimType = AuthConstants.CompanyClaim}))
                         {
                             var claimResult = await UserManager.AddClaimsAsync(currentUser, new List<Claim>
                             {
@@ -113,16 +117,14 @@ namespace CloudStorage.Controllers
                                     // yaaay!        
                                 }
                             }
-                            
-                            var roleAddResult = await UserManager.AddToRoleAsync(currentUser,  AuthConstants.AdminRole );
+
+                            var roleAddResult = await UserManager.AddToRoleAsync(currentUser, AuthConstants.AdminRole);
                         }
                     }
 
 
                     if (Url.IsLocalUrl(model.ReturnUrl))
-                    {
                         return Redirect(model.ReturnUrl);
-                    }
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -133,7 +135,8 @@ namespace CloudStorage.Controllers
         }
 
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
@@ -143,7 +146,7 @@ namespace CloudStorage.Controllers
         [HttpGet]
         public IActionResult AccessDenied(string returnUrl = null)
         {
-            return View((object)returnUrl);
+            return View((object) returnUrl);
         }
     }
 }

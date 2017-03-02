@@ -1,7 +1,6 @@
-﻿@using CloudStorage.Controllers
-@model FileInfo
+﻿@model FileInfo
 
-@{ 
+@{
     ViewBag.Title = Model.FileName;
 }
 
@@ -10,8 +9,8 @@
 <div>File size in bytes: @Model.FileSizeInBytes</div>
 
 <form method="post" asp-action="Delete">
-    <input type="hidden" asp-for="Id" value="@Model.Id" />
-    <input type="submit" value="Yes" class="btn btn-primary" />
+    <input type="hidden" asp-for="Id" value="@Model.Id"/>
+    <input type="submit" value="Yes" class="btn btn-primary"/>
     <a asp-action="Index" class="btn btn-primary">No</a>
 </form>
 

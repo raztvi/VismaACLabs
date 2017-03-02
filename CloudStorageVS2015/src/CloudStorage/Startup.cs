@@ -1,40 +1,39 @@
 ﻿using System;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Configuration;
 using CloudStorage.Services;
 using CloudStorage.Services.Implementation;
 using Core.Constants;
-using Microsoft.AspNetCore.Routing;
+using Core.Entities;
 using Core.Services;
 using Data;
-using Microsoft.EntityFrameworkCore;
 using Data.Seed;
-using Core.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Data.Services;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 
 namespace CloudStorage
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; set; }
-
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddJsonFile("appsettings.json", true, true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
-
         }
+
+        public IConfiguration Configuration { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -42,14 +41,15 @@ namespace CloudStorage
         {
             services.AddLogging();
             services.AddMvc()
-                    .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
             services.AddSignalR(options => options.Hubs.EnableDetailedErrors = true);
             services.AddSingleton(Configuration);
             services.AddSingleton<IGreeter, Greeter>();
             services.AddScoped<IFileData, SqlFileData>();
             services.AddScoped<IBlobService, AzureBlobService>();
             services.AddScoped<ICompanyData, SqlCompanyData>();
-            services.AddDbContext<CloudStorageDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CloudStorage")));
+            services.AddDbContext<CloudStorageDbContext>(
+                options => options.UseSqlServer(Configuration.GetConnectionString("CloudStorage")));
             services.AddTransient<CloudStorageSeedData>();
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<CloudStorageDbContext>();
@@ -75,35 +75,33 @@ namespace CloudStorage
                 // User settings
                 options.User.RequireUniqueEmail = true;
             });
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy(AuthConstants.AdministratorClaimPolicy, policy =>
+            services.AddAuthorization(
+                options =>
                 {
-                    policy.RequireClaim(AuthConstants.UserTypeClaim, AuthConstants.AdministratorClaimType);
+                    options.AddPolicy(AuthConstants.AdministratorClaimPolicy,
+                        policy =>
+                        {
+                            policy.RequireClaim(AuthConstants.UserTypeClaim, AuthConstants.AdministratorClaimType);
+                        });
                 });
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(  IApplicationBuilder app, 
-                                IHostingEnvironment env, 
-                                ILoggerFactory loggerFactory,
-                                IGreeter greeter,
-                                CloudStorageSeedData seeder)
+        public void Configure(IApplicationBuilder app,
+            IHostingEnvironment env,
+            ILoggerFactory loggerFactory,
+            IGreeter greeter,
+            CloudStorageSeedData seeder)
         {
             loggerFactory.AddConsole();
 
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
             else
-            {
                 app.UseExceptionHandler(new ExceptionHandlerOptions
                 {
                     ExceptionHandler = context => context.Response.WriteAsync("Ooops, something went wrong!")
                 });
-            }
 
             app.UseFileServer();
 

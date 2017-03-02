@@ -2,11 +2,11 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
-using Core.Services;
 
 namespace Data.Services
 {
@@ -18,7 +18,8 @@ namespace Data.Services
         {
             // Get connection string
             var storageConnectionString = configuration.GetConnectionString("AzureStorageConnectionString");
-            if (string.IsNullOrWhiteSpace(storageConnectionString)) throw new Exception("Azure storage connection string is missing.");
+            if (string.IsNullOrWhiteSpace(storageConnectionString))
+                throw new Exception("Azure storage connection string is missing.");
 
             // Get account
             var storageAccount = CloudStorageAccount.Parse(storageConnectionString);
@@ -33,17 +34,23 @@ namespace Data.Services
         }
 
         /// <summary>
-        /// Uploads a blob from a stream
+        ///     Uploads a blob from a stream
         /// </summary>
         /// <param name="containerName">Container name</param>
         /// <param name="blobPath">Blob path inside of the given container</param>
         /// <param name="stream">Source stream for blob content</param>
         /// <param name="fileContentType">File content type</param>
         /// <param name="overwrite">Optional parameter that enables overwriting an existing blob</param>
-        /// <returns>An awaitable <see cref="Task"/>.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="containerName"/> or <paramref name="blobPath"/> are null or empty strings.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="stream"/> is not readable.</exception>
-        /// <exception cref="InvalidOperationException">Thrown when <paramref name="overwrite" /> is set to false and the <paramref name="blobPath"/> references an existing blob.</exception>
+        /// <returns>An awaitable <see cref="Task" />.</returns>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown when <paramref name="containerName" /> or <paramref name="blobPath" />
+        ///     are null or empty strings.
+        /// </exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="stream" /> is not readable.</exception>
+        /// <exception cref="InvalidOperationException">
+        ///     Thrown when <paramref name="overwrite" /> is set to false and the
+        ///     <paramref name="blobPath" /> references an existing blob.
+        /// </exception>
         public async Task UploadBlobFromStream(string containerName, string blobPath, Stream stream,
             string fileContentType = null, bool overwrite = false)
         {
@@ -59,26 +66,26 @@ namespace Data.Services
             // get blob reference
             var blob = container.GetBlockBlobReference(blobPath);
             if (!overwrite && await blob.ExistsAsync())
-            {
-                throw new InvalidOperationException($"Blob {blobPath} already exists. Set {nameof(overwrite)} to true if you want to overwrite it.");
-            }
+                throw new InvalidOperationException(
+                    $"Blob {blobPath} already exists. Set {nameof(overwrite)} to true if you want to overwrite it.");
 
             if (!string.IsNullOrWhiteSpace(fileContentType))
-            {
                 blob.Properties.ContentType = fileContentType;
-            }
             //retry already configured of Azure Storage API
             await blob.UploadFromStreamAsync(stream);
         }
 
         /// <summary>
-        /// Removes a blob from Azure Storage
+        ///     Removes a blob from Azure Storage
         /// </summary>
         /// <param name="containerName">Container name</param>
         /// <param name="blobPath">Blob path inside of the given container</param>
-        /// <returns>Awaitable <see cref="Task"/></returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="containerName"/> or <paramref name="blobPath"/> are null or empty strings.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="containerName"/> container does not exist.</exception>
+        /// <returns>Awaitable <see cref="Task" /></returns>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown when <paramref name="containerName" /> or <paramref name="blobPath" />
+        ///     are null or empty strings.
+        /// </exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="containerName" /> container does not exist.</exception>
         public async Task DeleteBlob(string containerName, string blobPath)
         {
             // check parameters
@@ -88,23 +95,24 @@ namespace Data.Services
             // get and check container reference
             var container = _blobClient.GetContainerReference(containerName);
             if (!await container.ExistsAsync())
-            {
                 throw new ArgumentException($"Container {container} does not exist");
-            }
 
             // get blob reference
             var blob = container.GetBlockBlobReference(blobPath);
             await blob.DeleteIfExistsAsync();
         }
 
-        /// <summary>       
-        /// Gets a blob's content stream
+        /// <summary>
+        ///     Gets a blob's content stream
         /// </summary>
         /// <param name="containerName">Container name</param>
         /// <param name="blobPath">Blob path inside of the given container</param>
         /// <returns>The blob's content stream</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="containerName"/> or <paramref name="blobPath"/> are null or empty strings.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="containerName"/> container does not exist.</exception>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown when <paramref name="containerName" /> or <paramref name="blobPath" />
+        ///     are null or empty strings.
+        /// </exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="containerName" /> container does not exist.</exception>
         public async Task<Stream> GetBlobStream(string containerName, string blobPath)
         {
             // check parameters
@@ -114,28 +122,27 @@ namespace Data.Services
             // get and check container reference
             var container = _blobClient.GetContainerReference(containerName);
             if (!await container.ExistsAsync())
-            {
                 throw new ArgumentException($"Container {container} does not exist");
-            }
 
             // get blob reference
             var blob = container.GetBlockBlobReference(blobPath);
             if (await blob.ExistsAsync())
-            {
                 return await blob.OpenReadAsync();
-            }
 
             return null;
         }
 
         /// <summary>
-        /// Gets the total size of a virtual folder.
+        ///     Gets the total size of a virtual folder.
         /// </summary>
         /// <param name="containerName">Container name</param>
         /// <param name="folderPath">Virtual folder path</param>
         /// <returns>The total size in bytes</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="containerName"/> or <paramref name="folderPath"/> are null or empty strings.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="containerName"/> container does not exist.</exception>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown when <paramref name="containerName" /> or <paramref name="folderPath" />
+        ///     are null or empty strings.
+        /// </exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="containerName" /> container does not exist.</exception>
         public async Task<long> GetFolderSize(string containerName, string folderPath)
         {
             // check parameters
@@ -145,25 +152,23 @@ namespace Data.Services
             // get and check container reference
             var container = _blobClient.GetContainerReference(containerName);
             if (!await container.ExistsAsync())
-            {
                 throw new ArgumentException($"Container {container} does not exist");
-            }
 
             var folder = container.GetDirectoryReference(folderPath);
             var folderSize = (await
-                folder.ListBlobsSegmentedAsync(true, BlobListingDetails.All, null, null, null, null))
+                    folder.ListBlobsSegmentedAsync(true, BlobListingDetails.All, null, null, null, null))
                 .Results.Sum(x => (x as CloudBlob)?.Properties.Length ?? 0);
 
             return folderSize;
         }
 
         /// <summary>
-        /// Gets the total size of a container.
+        ///     Gets the total size of a container.
         /// </summary>
         /// <param name="containerName">Container name</param>
         /// <returns>The total size in bytes</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="containerName"/> is null or empty string.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="containerName"/> container does not exist.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="containerName" /> is null or empty string.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="containerName" /> container does not exist.</exception>
         public async Task<long> GetContainerSize(string containerName)
         {
             // check parameters
@@ -172,23 +177,22 @@ namespace Data.Services
             // get and check container reference
             var container = _blobClient.GetContainerReference(containerName);
             if (!await container.ExistsAsync())
-            {
                 throw new ArgumentException($"Container {container} does not exist");
-            }
 
             var containerSize = (await
-                container.ListBlobsSegmentedAsync(string.Empty, true, BlobListingDetails.All, null, null, null, null)).Results
+                    container.ListBlobsSegmentedAsync(string.Empty, true, BlobListingDetails.All, null, null, null, null))
+                .Results
                 .Sum(x => (x as CloudBlob)?.Properties.Length ?? 0);
 
             return containerSize;
         }
 
         /// <summary>
-        /// Creates a container
+        ///     Creates a container
         /// </summary>
         /// <param name="containerName">Container name</param>
-        /// <returns>An awaitable <see cref="Task"/></returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="containerName"/> is null or empty string.</exception>
+        /// <returns>An awaitable <see cref="Task" /></returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="containerName" /> is null or empty string.</exception>
         public async Task CreateContainerIfNotExists(string containerName)
         {
             // check parameters
@@ -199,13 +203,16 @@ namespace Data.Services
         }
 
         /// <summary>
-        /// Deletes all blobs in a virtual folder.
+        ///     Deletes all blobs in a virtual folder.
         /// </summary>
         /// <param name="containerName">Container name</param>
         /// <param name="folderPath">Virtual folder path</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="containerName"/> or <paramref name="folderPath"/> are null or empty strings.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="containerName"/> container does not exist.</exception>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown when <paramref name="containerName" /> or <paramref name="folderPath" />
+        ///     are null or empty strings.
+        /// </exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="containerName" /> container does not exist.</exception>
         public async Task DeleteFolder(string containerName, string folderPath)
         {
             // check parameters
@@ -215,25 +222,21 @@ namespace Data.Services
             // get and check container reference
             var container = _blobClient.GetContainerReference(containerName);
             if (!await container.ExistsAsync())
-            {
                 throw new ArgumentException($"Container {container} does not exist");
-            }
 
             var folder = container.GetDirectoryReference(folderPath);
             var blobs = (await
                 folder.ListBlobsSegmentedAsync(true, BlobListingDetails.All, -1, null, null, null)).Results;
             foreach (var blob in blobs)
-            {
-                await container.GetBlockBlobReference(((CloudBlockBlob)blob).Name).DeleteIfExistsAsync();
-            }
+                await container.GetBlockBlobReference(((CloudBlockBlob) blob).Name).DeleteIfExistsAsync();
         }
 
         /// <summary>
-        /// Deletes a container and all its blobs
+        ///     Deletes a container and all its blobs
         /// </summary>
         /// <param name="containerName">Container name</param>
-        /// <returns>An awaitable <see cref="Task"/></returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="containerName"/> is null or empty string.</exception>
+        /// <returns>An awaitable <see cref="Task" /></returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="containerName" /> is null or empty string.</exception>
         public async Task DeleteContainer(string containerName)
         {
             // check parameters
@@ -245,15 +248,17 @@ namespace Data.Services
         }
 
         /// <summary>
-        /// Get SAS url
+        ///     Get SAS url
         /// </summary>
         /// <param name="containerName">Container name</param>
         /// <param name="blobPath">Blob path</param>
         /// <param name="minutesToLive">Minutes the SAS url is valid. Must be a positive, non zero integer.</param>
         /// <returns>The SAS url</returns>
         /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ArgumentException">When the container specified by <paramref name="containerName"/> does not exist, or when
-        /// <paramref name="minutesToLive"/> is a negative or zero integer.</exception>
+        /// <exception cref="ArgumentException">
+        ///     When the container specified by <paramref name="containerName" /> does not exist, or when
+        ///     <paramref name="minutesToLive" /> is a negative or zero integer.
+        /// </exception>
         public async Task<string> GetTemporaryUrl(string containerName, string blobPath, int minutesToLive = 10)
         {
             // check parameters
@@ -264,13 +269,11 @@ namespace Data.Services
             // get and check container reference
             var container = _blobClient.GetContainerReference(containerName);
             if (!await container.ExistsAsync())
-            {
                 throw new ArgumentException($"Container {container} does not exist");
-            }
 
-            CloudBlob blob = container.GetBlobReference(blobPath);
+            var blob = container.GetBlobReference(blobPath);
 
-            var sas = blob.GetSharedAccessSignature(new SharedAccessBlobPolicy()
+            var sas = blob.GetSharedAccessSignature(new SharedAccessBlobPolicy
             {
                 Permissions = SharedAccessBlobPermissions.Read,
                 SharedAccessExpiryTime = DateTime.Now.AddMinutes(minutesToLive)

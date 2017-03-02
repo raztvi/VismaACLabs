@@ -1,7 +1,7 @@
-﻿using Core.Entities;
+﻿using System.Threading.Tasks;
+using Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace CloudStorage.Controllers
 {
@@ -20,9 +20,7 @@ namespace CloudStorage.Controllers
             User result = null;
 
             if (User.Identity.IsAuthenticated)
-            {
                 result = await UserManager.FindByNameAsync(User.Identity.Name);
-            }
 
             return result;
         }

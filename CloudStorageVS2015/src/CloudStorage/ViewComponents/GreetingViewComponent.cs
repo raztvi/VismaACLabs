@@ -5,7 +5,7 @@ namespace CloudStorage.ViewComponents
 {
     public class GreetingViewComponent : ViewComponent
     {
-        IGreeter _greeter;
+        private readonly IGreeter _greeter;
 
         public GreetingViewComponent(IGreeter greeter)
         {
