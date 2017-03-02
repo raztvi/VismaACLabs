@@ -1,6 +1,4 @@
-﻿@using Core.Entities
-@using CloudStorage.Controllers
-@model FileInfo
+﻿@model FileInfo
 
 @{
     ViewBag.Title = $"Edit {Model.FileName}";
@@ -11,11 +9,11 @@
     <div>
         <form method="post" asp-antiforgery="true">
 
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Id"/>
 
             <div>
                 <label asp-for="FileName"></label>
-                <input asp-for="FileName" />
+                <input asp-for="FileName"/>
                 <span asp-validation-for="FileName"></span>
             </div>
 

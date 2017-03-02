@@ -1,13 +1,13 @@
-﻿using Core.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Core.Entities;
+using Core.Services;
 
 namespace Data.Services
 {
     public class SqlFileData : IFileData
     {
-        private CloudStorageDbContext _context;
+        private readonly CloudStorageDbContext _context;
 
         public SqlFileData(CloudStorageDbContext context)
         {
@@ -27,10 +27,8 @@ namespace Data.Services
 
         public void Delete(FileInfo fileInfo)
         {
-            if(fileInfo != null)
-            {
+            if (fileInfo != null)
                 _context.FileInfos.Remove(fileInfo);
-            }
         }
 
         public FileInfo Get(Guid id)

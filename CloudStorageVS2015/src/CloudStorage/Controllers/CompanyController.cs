@@ -1,17 +1,17 @@
-﻿using CloudStorage.ViewModels;
+﻿using System;
+using CloudStorage.ViewModels;
+using Core.Constants;
 using Core.Entities;
 using Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using Core.Constants;
 
 namespace CloudStorage.Controllers
 {
     [Authorize]
     public class CompanyController : Controller
     {
-        readonly ICompanyData _companyData;
+        private readonly ICompanyData _companyData;
 
         public CompanyController(ICompanyData companyData)
         {
@@ -34,14 +34,13 @@ namespace CloudStorage.Controllers
         public IActionResult Edit(Guid id)
         {
             var company = _companyData.Get(id);
-            if(company == null)
-            {
+            if (company == null)
                 return RedirectToAction(nameof(Index));
-            }
             return View(company);
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = AuthConstants.AdminRole)]
         public IActionResult Edit(Guid id, CreateCompanyViewModel model)
         {
@@ -55,7 +54,7 @@ namespace CloudStorage.Controllers
 
                 _companyData.Commit();
 
-                return RedirectToAction(nameof(Details), new { id = company.Id });
+                return RedirectToAction(nameof(Details), new {id = company.Id});
             }
 
             return View(company);
@@ -68,7 +67,8 @@ namespace CloudStorage.Controllers
             return View();
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Policy = AuthConstants.AdministratorClaimPolicy)]
         public IActionResult Create(CreateCompanyViewModel model)
         {
