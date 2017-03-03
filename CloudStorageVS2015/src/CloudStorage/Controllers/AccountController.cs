@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using CloudStorage.Helpers;
 using CloudStorage.ViewModels;
 using Core.Constants;
 using Core.Entities;
@@ -16,16 +17,14 @@ namespace CloudStorage.Controllers
 {
     public class AccountController : BaseController
     {
-        private readonly IConnectionManager _connectionManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<User> _signInManager;
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager,
-            RoleManager<IdentityRole> roleManager, IConnectionManager connectionManager) : base(userManager)
+            RoleManager<IdentityRole> roleManager) : base(userManager)
         {
             _signInManager = signInManager;
             _roleManager = roleManager;
-            _connectionManager = connectionManager;
         }
 
         [HttpGet]
@@ -50,9 +49,8 @@ namespace CloudStorage.Controllers
 
                 if (createResult.Succeeded)
                 {
-                    //_connectionManager.GetHubContext<FileOperationsHub>().Groups.Add()
                     await _signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).GetControllerName());
                 }
 
                 foreach (var error in createResult.Errors)
@@ -125,7 +123,7 @@ namespace CloudStorage.Controllers
 
                     if (Url.IsLocalUrl(model.ReturnUrl))
                         return Redirect(model.ReturnUrl);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).GetControllerName());
                 }
             }
 
@@ -140,7 +138,7 @@ namespace CloudStorage.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).GetControllerName());
         }
 
         [HttpGet]
