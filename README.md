@@ -8,6 +8,10 @@ Additional references and resources can be found [here](/docs/References.md).
 
 Below you can read about some specifications and technical details and requirements.
 
+**Note: Use this project [CloudStorageVS2015](/tree/master/CloudStorageVS2015)**. 
+
+*The [CloudStorage](/tree/master/CloudStorage) project was the initial project I started working on using the newes RC version of Visual Studio 2017, but because of its unfinished state, there were some blocking bugs and I had to quickly remake everything in VS2015. Probably the bugs will get solved once the full version of VS2017 will be released in 7th of March 2017. I might update that project later on.*
+
 ## Functional requirements
 
 ### As a registered user I can
