@@ -40,7 +40,7 @@ Below you can read about some specifications and technical details and requireme
 - [x] use azure storage
 - [x] use sql local db
 - [x] use SignalR
-- [ ] write some unit tests
+- [x] write some unit tests
 
 
 ### As a respectable trainer and developer I must

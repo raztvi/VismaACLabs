@@ -19,7 +19,7 @@ namespace CloudStorage.Helpers
             string result = string.Empty;
 
             const string controllerSuffix = "Controller";
-            if (!text.IsNullOrWhiteSpace() && text.Contains(controllerSuffix))
+            if (!text.IsNullOrWhiteSpace() && text.EndsWith(controllerSuffix))
             {
                 var index = text.LastIndexOf(controllerSuffix, StringComparison.Ordinal);
                 result = text.Substring(0, index);

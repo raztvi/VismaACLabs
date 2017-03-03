@@ -2,6 +2,8 @@
 
 Below are provided the links used to create this application and also some extra reading materials.
 
+*Note: The link to the presentations will be provided here once they are done.*
+
 ### ASP.NET CORE
 
 - Main ASP.NET Core documentation: https://docs.microsoft.com/en-us/aspnet/core/
