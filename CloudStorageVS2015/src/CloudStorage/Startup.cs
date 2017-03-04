@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
+using CloudStorage.Seed;
 
 namespace CloudStorage
 {
@@ -113,9 +114,9 @@ namespace CloudStorage
 
             app.UseSignalR();
 
-            //app.Run(context => context.Response.WriteAsync($"Not found: {context.Request.Path}"));
-
+            // Seed initial data
             seeder.EnsureSeedData().Wait();
+            UsersAndRolesSeeder.SeedUsersAndRoles(app.ApplicationServices).Wait();
         }
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)

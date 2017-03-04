@@ -41,11 +41,12 @@ Below you can read about some specifications and technical details and requireme
 - [x] use sql local db
 - [x] use SignalR
 - [x] write some unit tests
+- [ ] use logging
 
 
 ### As a respectable trainer and developer I must
-- [ ] extract constants
-- [ ] seed users, roles, claims
+- [x] extract constants
+- [x] seed users, roles, claims
 - [x] remove unused usings
 - [ ] refactor code where needed
 - [ ] maybe make sure all of the UI looks decent (default / basic style the shit out of everything)
