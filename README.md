@@ -1,4 +1,4 @@
-# Visma AC Labs - Cloud Storage
+﻿# Visma AC Labs - Cloud Storage
 
 This is the technical material for a course for students in Timisoara, Romania. The course is part of a students' organization project called [LigaAC LABS](https://labs.ligaac.ro/).
 
@@ -47,7 +47,7 @@ __**Note on note: Since VS2017 is officially released, the 2015 version of the p
 
 
 ### As a respectable trainer and developer I must
-- [ ] **Verify and migrate 2015 project to 2017**
+- [x] **Verify and migrate 2015 project to 2017**
 - [x] extract constants
 - [x] seed users, roles, claims
 - [x] remove unused usings
@@ -58,11 +58,20 @@ __**Note on note: Since VS2017 is officially released, the 2015 version of the p
 ## Technical details
 
 ### Prerequisites
-- Visual Studio 2015 Community or Professional Edition with Update 3 (https://go.microsoft.com/fwlink/?LinkId=691978&clcid=0x409)
-- Latest Azure SDK (2.9.6 current) (https://go.microsoft.com/fwlink/?LinkId=518003&clcid=0x409)
-- SQL Server Data Tools for VS2015 (https://msdn.microsoft.com/mt186501)
-- .NET Core tools preview for Visual Studio (1.0.1 tools Preview 2 current) (https://go.microsoft.com/fwlink/?LinkID=827546)
-- latest version of Nuget package manager (https://www.nuget.org/)
+- Visual Studio 2017 Community (https://www.visualstudio.com/downloads/) and make sure you install the following workloads:
+  - ASP.NET and web development
+  - Azure development
+  - Data storage and processing
+  - .NET Core cross-platform development
+
+![Workloads part 1](/docs/images/vs1.png)
+![Workloads part 2](/docs/images/vs2.png)
+
+- ~~Visual Studio 2015 Community or Professional Edition with Update 3 (https://go.microsoft.com/fwlink/?LinkId=691978&clcid=0x409)~~
+- ~~Latest Azure SDK (2.9.6 current) (https://go.microsoft.com/fwlink/?LinkId=518003&clcid=0x409)~~
+- ~~SQL Server Data Tools for VS2015 (https://msdn.microsoft.com/mt186501)~~
+- ~~.NET Core tools preview for Visual Studio (1.0.1 tools Preview 2 current) (https://go.microsoft.com/fwlink/?LinkID=827546)~~
+- ~~latest version of Nuget package manager (https://www.nuget.org/)~~
 
 ### Setup
 - open solution in VS
