@@ -21,7 +21,7 @@ __**Note on note: Since VS2017 is officially released, the 2015 version of the p
 - [x] see a list of files uploaded by users in my company
 - [x] download any file from the above list
 - [x] edit the metadata of any file from above
-- ~~[ ] edit the contents of any file from above (re-upload)~~
+- [ ] ~~edit the contents of any file from above (re-upload)~~
 - [x] delete a file from the above list
 - [x] upload a new file along with metadata
 - [x] be notified in real time when someone from my company uploads a new file
