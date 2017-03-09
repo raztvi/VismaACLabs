@@ -10,9 +10,13 @@ Below you can read about some specifications and technical details and requireme
 
 **Note: Use this project [CloudStorageVS2015](/CloudStorageVS2015)**.
 
-__**Note on note: Since VS2017 is officially released, the 2015 version of the project might get migrated to 2017 (see to do list further down).**__
+**Note on note: Since VS2017 is officially released, the 2015 version of the project might get migrated to 2017 (see to do list further down).**
+
+**Update on note on note: DONE!**
 
 *The [CloudStorage](/CloudStorage) project was the initial project I started working on using the newes RC version of Visual Studio 2017, but because of its unfinished state, there were some blocking bugs and I had to quickly remake everything in VS2015. Probably the bugs will get solved once the full version of VS2017 will be released in 7th of March 2017. I might update that project later on.*
+
+*Update: Did it! Will have to clean up and keep only one version.*
 
 ## Functional requirements
 
