@@ -11,11 +11,14 @@
 </environment>
 
 <div>
-    @foreach (var fileInfo in Model.FileInfos)
+    @if (Model.FileInfos != null && Model.FileInfos.Any())
     {
-        @Html.Partial("_Summary", fileInfo)
+        foreach (var fileInfo in Model.FileInfos)
+        {
+            @Html.Partial("_Summary", fileInfo)
 
-        <hr/>
+            <hr />
+        }
     }
 </div>
 

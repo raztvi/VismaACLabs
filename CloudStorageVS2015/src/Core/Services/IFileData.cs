@@ -6,7 +6,7 @@ namespace Core.Services
 {
     public interface IFileData
     {
-        IEnumerable<FileInfo> GetAll();
+        IEnumerable<FileInfo> GetAll(string companyId = null);
         FileInfo Get(Guid id);
         FileInfo Add(FileInfo file);
         void Delete(FileInfo fileInfo);

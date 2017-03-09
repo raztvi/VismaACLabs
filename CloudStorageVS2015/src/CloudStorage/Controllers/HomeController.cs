@@ -12,11 +12,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR.Infrastructure;
 using Microsoft.Extensions.Logging;
+using CloudStorage.Helpers;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CloudStorage.Controllers
 {
+    [Authorize]
     public class HomeController : BaseController
     {
         private readonly IBlobService _blobService;
@@ -41,7 +43,7 @@ namespace CloudStorage.Controllers
         {
             var model = new HomePageViewModel
             {
-                FileInfos = _fileData.GetAll(),
+                FileInfos = _fileData.GetAll(GetNonAdminUserCompanyId()),
                 Message = _greeter.GetGreeting()
             };
 
@@ -54,6 +56,13 @@ namespace CloudStorage.Controllers
 
             if (model == null)
                 return RedirectToAction(nameof(Index));
+
+            var companyId = GetNonAdminUserCompanyId();
+            if (!companyId.IsNullOrWhiteSpace() && !model.ContainerName.Equals(companyId, StringComparison.OrdinalIgnoreCase))
+            {
+                return RedirectToAction(nameof(AccountController.AccessDenied), nameof(AccountController).GetControllerName(),
+                    new { returnUrl = Request.Path });
+            }
 
             return View(model);
         }
@@ -88,7 +97,8 @@ namespace CloudStorage.Controllers
                         ContentType = model.ContentType,
                         FileName = model.FileName,
                         FileContentType = model.UploadedFile.ContentType,
-                        FileSizeInBytes = model.UploadedFile.Length
+                        FileSizeInBytes = model.UploadedFile.Length,
+                        ContainerName = containerName
                     };
 
                     _fileData.Add(file);
@@ -102,22 +112,36 @@ namespace CloudStorage.Controllers
             return View(model);
         }
 
-        [Authorize]
         [HttpGet]
         public IActionResult Edit(Guid id)
         {
             var model = _fileData.Get(id);
             if (model == null)
                 return RedirectToAction(nameof(Index));
+
+            var companyId = GetNonAdminUserCompanyId();
+            if (!companyId.IsNullOrWhiteSpace() && !model.ContainerName.Equals(companyId, StringComparison.OrdinalIgnoreCase))
+            {
+                return RedirectToAction(nameof(AccountController.AccessDenied), nameof(AccountController).GetControllerName(),
+                    new { returnUrl = Request.Path });
+            }
+
             return View(model);
         }
 
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Guid id, UploadViewModel model)
         {
             var fileInfo = _fileData.Get(id);
+
+            var companyId = GetNonAdminUserCompanyId();
+            if (!companyId.IsNullOrWhiteSpace() && !fileInfo.ContainerName.Equals(companyId, StringComparison.OrdinalIgnoreCase))
+            {
+                return RedirectToAction(nameof(AccountController.AccessDenied), nameof(AccountController).GetControllerName(),
+                    new { returnUrl = Request.Path });
+            }
+
             if (ModelState.IsValid)
             {
                 fileInfo.FileName = model.FileName;
@@ -134,7 +158,6 @@ namespace CloudStorage.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> TotalCompanyFilesSize()
         {
             var user = await GetLoggedInUser();
@@ -149,6 +172,12 @@ namespace CloudStorage.Controllers
             var fileInfo = _fileData.Get(id);
             if (fileInfo != null)
             {
+                var companyId = GetNonAdminUserCompanyId();
+                if (!companyId.IsNullOrWhiteSpace() && !fileInfo.ContainerName.Equals(companyId, StringComparison.OrdinalIgnoreCase))
+                {
+                    return null;
+                }
+
                 var stream = await _blobService.GetBlobStream(fileInfo.ContainerName, fileInfo.FileName);
                 return File(stream, fileInfo.FileContentType, fileInfo.FileName);
             }
@@ -156,21 +185,34 @@ namespace CloudStorage.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public IActionResult Delete(Guid id)
         {
             var file = _fileData.Get(id);
+
+            var companyId = GetNonAdminUserCompanyId();
+            if (!companyId.IsNullOrWhiteSpace() && !file.ContainerName.Equals(companyId, StringComparison.OrdinalIgnoreCase))
+            {
+                return RedirectToAction(nameof(AccountController.AccessDenied), nameof(AccountController).GetControllerName(),
+                    new { returnUrl = Request.Path });
+            }
+
             return View(file);
         }
 
         [ActionName("Delete")]
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> DeleteConfirm(Guid id)
         {
             var file = _fileData.Get(id);
             if (file != null)
             {
+                var companyId = GetNonAdminUserCompanyId();
+                if (!companyId.IsNullOrWhiteSpace() && !file.ContainerName.Equals(companyId, StringComparison.OrdinalIgnoreCase))
+                {
+                    return RedirectToAction(nameof(AccountController.AccessDenied), nameof(AccountController).GetControllerName(),
+                        new { returnUrl = Request.Path });
+                }
+
                 if (!string.IsNullOrWhiteSpace(file.ContainerName) && !string.IsNullOrWhiteSpace(file.FileName))
                     await _blobService.DeleteBlob(file.ContainerName, file.FileName);
                 _fileData.Delete(file);

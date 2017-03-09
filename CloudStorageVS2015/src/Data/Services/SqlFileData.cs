@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Core.Entities;
 using Core.Services;
+using System.Linq;
 
 namespace Data.Services
 {
@@ -36,9 +37,10 @@ namespace Data.Services
             return _context.FileInfos.Find(id);
         }
 
-        public IEnumerable<FileInfo> GetAll()
+        public IEnumerable<FileInfo> GetAll(string companyId = null)
         {
-            return _context.FileInfos;
+            return string.IsNullOrWhiteSpace(companyId) ? _context.FileInfos :
+                _context.FileInfos.Where(_ => companyId.Equals(_.ContainerName, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

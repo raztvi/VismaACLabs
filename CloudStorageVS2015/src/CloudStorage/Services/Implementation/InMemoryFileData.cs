@@ -62,7 +62,7 @@ namespace CloudStorage.Services.Implementation
             return _fileInfos.FirstOrDefault(_ => _.Id == id);
         }
 
-        public IEnumerable<FileInfo> GetAll()
+        public IEnumerable<FileInfo> GetAll(string companyId = null)
         {
             return _fileInfos;
         }

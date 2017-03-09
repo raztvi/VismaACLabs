@@ -15,8 +15,8 @@ namespace Data.Seed
 
         public async Task EnsureSeedData()
         {
-            await SeedFileInfos();
             await SeedCompanies();
+            await SeedFileInfos();
         }
 
         private async Task SeedCompanies()
@@ -54,39 +54,46 @@ namespace Data.Seed
         {
             if (!_context.FileInfos.Any())
             {
+                var companyId = (_context.Companies.ToArray())[0].Id.ToString();
+
                 var fileInfo1 = new FileInfo
                 {
                     ContentType = FileContentType.Invoice,
                     FileName = "Demo invoice.pdf",
-                    FileSizeInBytes = 1234
+                    FileSizeInBytes = 1234,
+                    ContainerName = companyId
                 };
 
                 var fileInfo2 = new FileInfo
                 {
                     ContentType = FileContentType.Report,
                     FileName = "Bug report.csv",
-                    FileSizeInBytes = 1234
+                    FileSizeInBytes = 1234,
+                    ContainerName = companyId
                 };
 
                 var fileInfo3 = new FileInfo
                 {
                     ContentType = FileContentType.Selfie,
                     FileName = "My last fire show.jpg",
-                    FileSizeInBytes = 1234
+                    FileSizeInBytes = 1234,
+                    ContainerName = companyId
                 };
 
                 var fileInfo4 = new FileInfo
                 {
                     ContentType = FileContentType.Voucher,
                     FileName = "Something.png",
-                    FileSizeInBytes = 1234
+                    FileSizeInBytes = 1234,
+                    ContainerName = companyId
                 };
 
                 var fileInfo5 = new FileInfo
                 {
                     ContentType = FileContentType.Other,
                     FileName = "MyNotes.txt",
-                    FileSizeInBytes = 1234
+                    FileSizeInBytes = 1234,
+                    ContainerName = companyId
                 };
 
                 await _context.FileInfos.AddRangeAsync(fileInfo1, fileInfo2, fileInfo3, fileInfo4, fileInfo5);
