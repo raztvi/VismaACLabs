@@ -8,25 +8,22 @@
     <h1>Upload</h1>
     <div>
         <form method="post" enctype="multipart/form-data" asp-action="Upload">
-            <div class="form-group">
-                <label asp-for="UploadedFile"></label>
-                <input type="file" asp-for="UploadedFile"/>
+            <div class="form-group row">
+                <label asp-for="UploadedFile" class="col-md-2"></label>
+                <input type="file" asp-for="UploadedFile" class="col-md-10"/>
             </div>
-            <div class="form-group">
-                <label asp-for="FileName"></label>
-                <input type="text" asp-for="FileName"/>
-                <span asp-validation-for="FileName"></span>
+            <div class="form-group row">
+                <label asp-for="FileName" class="col-md-2"></label>
+                <input type="text" asp-for="FileName"class="col-md-4"/>
+                <span asp-validation-for="FileName"class="col-md-2"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ContentType"></label>
-                <select asp-for="ContentType" asp-items="@Html.GetEnumSelectList(typeof(FileContentType))"></select>
+            <div class="form-group row">
+                <label asp-for="ContentType" class="col-md-2"></label>
+                <select asp-for="ContentType" asp-items="@Html.GetEnumSelectList(typeof(FileContentType))" class="col-md-4"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Upload" class="btn btn-primary"/>
             </div>
         </form>
-    </div>
-    <div>
-        <a asp-action="@nameof(HomeController.Index)">Home</a>
     </div>
 </div>

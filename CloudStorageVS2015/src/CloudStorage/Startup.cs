@@ -18,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using CloudStorage.Seed;
+using CloudStorage.Filters;
 
 namespace CloudStorage
 {
@@ -41,9 +42,14 @@ namespace CloudStorage
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLogging();
-            services.AddMvc()
+            services.AddMvc(options =>
+                {
+                    options.Filters.Add(typeof(CustomExceptionFilterAttribute));
+                })
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+
             services.AddSignalR(options => options.Hubs.EnableDetailedErrors = true);
+
             services.AddSingleton(Configuration);
             services.AddSingleton<IGreeter, Greeter>();
             services.AddScoped<IFileData, SqlFileData>();
@@ -94,7 +100,7 @@ namespace CloudStorage
             IGreeter greeter,
             CloudStorageSeedData seeder)
         {
-            loggerFactory.AddConsole();
+            loggerFactory.AddConsole().AddDebug();
 
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();

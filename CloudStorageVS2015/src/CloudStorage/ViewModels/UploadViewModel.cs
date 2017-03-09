@@ -10,8 +10,9 @@ namespace CloudStorage.ViewModels
         [Display(Name = "File name")]
         [MaxLength(128, ErrorMessage = "Too long!")]
         public string FileName { get; set; }
-
+        [Display(Name = "Content type")]
         public FileContentType ContentType { get; set; }
+        [Display(Name = "File")]
         public IFormFile UploadedFile { get; set; }
     }
 }

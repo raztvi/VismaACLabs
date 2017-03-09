@@ -43,7 +43,7 @@ __**Note on note: Since VS2017 is officially released, the 2015 version of the p
 - [x] use sql local db
 - [x] use SignalR
 - [x] write some unit tests
-- [ ] use logging
+- [x] use logging
 
 
 ### As a respectable trainer and developer I must
@@ -51,8 +51,8 @@ __**Note on note: Since VS2017 is officially released, the 2015 version of the p
 - [x] extract constants
 - [x] seed users, roles, claims
 - [x] remove unused usings
-- [ ] refactor code where needed
-- [ ] maybe make sure all of the UI looks decent (default / basic style the shit out of everything)
+- [x] refactor code where needed *// more or less*
+- [ ] ~~maybe make sure all of the UI looks decent (default / basic style the shit out of everything)~~ *I suck at this, I tried my "best"...*
 
 
 ## Technical details

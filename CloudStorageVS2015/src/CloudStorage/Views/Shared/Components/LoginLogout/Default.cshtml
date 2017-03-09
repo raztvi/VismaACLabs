@@ -1,9 +1,15 @@
 ﻿@if (User.Identity.IsAuthenticated)
 {
-    <span>Hello, @User.Identity.Name</span>
-    <form method="post" asp-controller="Account" asp-action="Logout" asp-antiforgery="true">
-        <input class="btn btn-default" type="submit" value="Logout"/>
-    </form>
+    <div class="row">
+        <div class="col-md-6">
+            <span>Hello, @User.Identity.Name</span>
+        </div>
+        <div class="col-md-6">
+            <form method="post" asp-controller="Account" asp-action="Logout" asp-antiforgery="true">
+                <input class="btn btn-default" type="submit" value="Logout" />
+            </form>
+        </div>
+    </div>
 }
 else
 {
