@@ -45,6 +45,9 @@ Below are provided the links used to create this application and also some extra
 - [ASP.NET Core Fundamentals](https://app.pluralsight.com/library/courses/aspdotnet-core-fundamentals/table-of-contents)
 - [Building a Web App with ASP.NET Core, MVC 6, EF Core, and Angular](https://www.pluralsight.com/courses/aspdotnetcore-efcore-bootstrap-angular-web-app)
 
+### Microsoft Virtual Academy courses
+- [Introduction to ASP.NET Core 1.0](https://mva.microsoft.com/en-US/training-courses/introduction-to-aspnet-core-10-16841?l=JWZaodE6C_5706218965)
+
 ### Other
 
 - Markdown cheat sheet: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
