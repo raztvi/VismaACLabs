@@ -17,5 +17,10 @@ $webClient.DownloadFile("https://raw.githubusercontent.com/dotnet/cli/rel/1.0.0/
 $dotnetPath = $dotnetPs1Path
 
 Write-Output "    Calling: $dotnetPath"
-& "$dotnetPath" -Version "1.0.1" -InstallDir "$PSScriptRoot\Tools" -DryRun
+& "$dotnetPath" -Version "1.0.1" -InstallDir "$PSScriptRoot\Tools"
+$cliPath = "$PSScriptRoot\Tools\dotnet.exe"
+
+Write-Output "Downloaded version: "
+& "$cliPath" --version
+
 Write-Output "    Done."
