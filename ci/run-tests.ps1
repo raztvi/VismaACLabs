@@ -1,7 +1,8 @@
 Write-Output "Running tests..."
 
-$commonPath="$PSScriptRoot\..\CloudStorage\test"
+$commonTestPath="$PSScriptRoot\..\CloudStorage\test"
+$dotnetPath="$PSScriptRoot\Tools\dotnet.exe"
 
-dir "$commonPath" | % { dotnet test "$commonPath\$_\$_.csproj" }
+dir "$commonTestPath" | % { &"$dotnetPath" test "$commonTestPath\$_\$_.csproj" }
 
 Write-Output "Tests done."
