@@ -35,6 +35,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci", "ci", "{AC1F39FE-CB3A-4A4E-A614-411CD9961C1C}"
 	ProjectSection(SolutionItems) = preProject
 		..\ci\install-dotnet.ps1 = ..\ci\install-dotnet.ps1
+		..\ci\run-tests.ps1 = ..\ci\run-tests.ps1
 	EndProjectSection
 EndProject
 Global
