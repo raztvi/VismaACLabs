@@ -43,7 +43,8 @@ Below you can read about some specifications and technical details and requireme
 
 
 ### As a respectable trainer and developer I must
-- [x] **Verify and migrate 2015 project to 2017**
+- [x] **Ultra-mega-super-bonus:** Implement Continuous Integration pipeline *(see status badge above)*
+- [x] Test and migrate 2015 project to 2017
 - [x] extract constants
 - [x] seed users, roles, claims
 - [x] remove unused usings
