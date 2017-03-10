@@ -62,11 +62,12 @@ Below you can read about some specifications and technical details and requireme
 ## Technical details
 
 ### Prerequisites
-- Visual Studio 2017 Community (https://www.visualstudio.com/downloads/) and make sure you install the following workloads:
+- [Visual Studio 2017 Community](https://www.visualstudio.com/downloads/) and make sure you install the following workloads:
   - ASP.NET and web development
   - Azure development
   - Data storage and processing
   - .NET Core cross-platform development
+- [Razor Language Services extension](https://marketplace.visualstudio.com/items?itemName=ms-madsk.RazorLanguageServices)
 
 ![Workloads part 1](/docs/images/vs1.png)
 ![Workloads part 2](/docs/images/vs2.png)
@@ -76,6 +77,8 @@ Below you can read about some specifications and technical details and requireme
 - ~~SQL Server Data Tools for VS2015 (https://msdn.microsoft.com/mt186501)~~
 - ~~.NET Core tools preview for Visual Studio (1.0.1 tools Preview 2 current) (https://go.microsoft.com/fwlink/?LinkID=827546)~~
 - ~~latest version of Nuget package manager (https://www.nuget.org/)~~
+
+*FYI: [Known issues with .NET Core in Visual Studio 2017](https://github.com/aspnet/Tooling/blob/master/known-issues-vs2017.md)*
 
 ### Setup
 - open solution in VS
