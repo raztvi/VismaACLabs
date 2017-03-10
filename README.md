@@ -1,4 +1,6 @@
-# Visma AC Labs - Cloud Storage
+﻿# Visma AC Labs - Cloud Storage
+
+![build status](https://emilcraciun.visualstudio.com/_apis/public/build/definitions/f6381654-59b1-4043-bd5f-3c9a9e740d98/1/badge)
 
 This is the technical material for a course for students in Timisoara, Romania. The course is part of a students' organization project called [LigaAC LABS](https://labs.ligaac.ro/).
 
@@ -7,12 +9,6 @@ The purpose of this application is to make an introduction into ASP.NET Core, Mi
 Additional references and resources can be found [here](/docs/References.md). 
 
 Below you can read about some specifications and technical details and requirements.
-
-**Note: Use this project [CloudStorageVS2015](/CloudStorageVS2015)**.
-
-__**Note on note: Since VS2017 is officially released, the 2015 version of the project might get migrated to 2017 (see to do list further down).**__
-
-*The [CloudStorage](/CloudStorage) project was the initial project I started working on using the newes RC version of Visual Studio 2017, but because of its unfinished state, there were some blocking bugs and I had to quickly remake everything in VS2015. Probably the bugs will get solved once the full version of VS2017 will be released in 7th of March 2017. I might update that project later on.*
 
 ## Functional requirements
 
@@ -47,7 +43,7 @@ __**Note on note: Since VS2017 is officially released, the 2015 version of the p
 
 
 ### As a respectable trainer and developer I must
-- [ ] **Verify and migrate 2015 project to 2017**
+- [x] **Verify and migrate 2015 project to 2017**
 - [x] extract constants
 - [x] seed users, roles, claims
 - [x] remove unused usings
@@ -58,11 +54,24 @@ __**Note on note: Since VS2017 is officially released, the 2015 version of the p
 ## Technical details
 
 ### Prerequisites
-- Visual Studio 2015 Community or Professional Edition with Update 3 (https://go.microsoft.com/fwlink/?LinkId=691978&clcid=0x409)
-- Latest Azure SDK (2.9.6 current) (https://go.microsoft.com/fwlink/?LinkId=518003&clcid=0x409)
-- SQL Server Data Tools for VS2015 (https://msdn.microsoft.com/mt186501)
-- .NET Core tools preview for Visual Studio (1.0.1 tools Preview 2 current) (https://go.microsoft.com/fwlink/?LinkID=827546)
-- latest version of Nuget package manager (https://www.nuget.org/)
+- [Visual Studio 2017 Community](https://www.visualstudio.com/downloads/) and make sure you install the following workloads:
+  - ASP.NET and web development
+  - Azure development
+  - Data storage and processing
+  - .NET Core cross-platform development
+- [Razor Language Services extension](https://marketplace.visualstudio.com/items?itemName=ms-madsk.RazorLanguageServices)
+
+![Workloads part 1](/docs/images/vs1.png)
+![Workloads part 2](/docs/images/vs2.png)
+
+*FYI: [Known issues with .NET Core in Visual Studio 2017](https://github.com/aspnet/Tooling/blob/master/known-issues-vs2017.md)*
+
+*More FYI: just for the fun of it, see below how many SEPARATE things you had to install if we would have continued with VS2015 :)*
+- ~~Visual Studio 2015 Community or Professional Edition with Update 3 (https://go.microsoft.com/fwlink/?LinkId=691978&clcid=0x409)~~
+- ~~Latest Azure SDK (2.9.6 current) (https://go.microsoft.com/fwlink/?LinkId=518003&clcid=0x409)~~
+- ~~SQL Server Data Tools for VS2015 (https://msdn.microsoft.com/mt186501)~~
+- ~~.NET Core tools preview for Visual Studio (1.0.1 tools Preview 2 current) (https://go.microsoft.com/fwlink/?LinkID=827546)~~
+- ~~latest version of Nuget package manager (https://www.nuget.org/)~~
 
 ### Setup
 - open solution in VS
