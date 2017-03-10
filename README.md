@@ -1,5 +1,7 @@
 ﻿# Visma AC Labs - Cloud Storage
 
+![build status](https://emilcraciun.visualstudio.com/_apis/public/build/definitions/f6381654-59b1-4043-bd5f-3c9a9e740d98/1/badge)
+
 This is the technical material for a course for students in Timisoara, Romania. The course is part of a students' organization project called [LigaAC LABS](https://labs.ligaac.ro/).
 
 The purpose of this application is to make an introduction into ASP.NET Core, Microsoft Azure Blob Storage, SignalR, unit testing and the basic usage of version control system (git).
