@@ -32,6 +32,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Tests", "test\Data.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudStorage.Tests", "test\CloudStorage.Tests\CloudStorage.Tests.csproj", "{60077945-989A-4CA8-BD47-A027B523D238}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci", "ci", "{AC1F39FE-CB3A-4A4E-A614-411CD9961C1C}"
+	ProjectSection(SolutionItems) = preProject
+		..\ci\install-dotnet.ps1 = ..\ci\install-dotnet.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
