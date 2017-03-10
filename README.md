@@ -8,16 +8,6 @@ Additional references and resources can be found [here](/docs/References.md).
 
 Below you can read about some specifications and technical details and requirements.
 
-**Note: Use this project [CloudStorageVS2015](/CloudStorageVS2015)**.
-
-**Note on note: Since VS2017 is officially released, the 2015 version of the project might get migrated to 2017 (see to do list further down).**
-
-**Update on note on note: DONE!**
-
-*The [CloudStorage](/CloudStorage) project was the initial project I started working on using the newes RC version of Visual Studio 2017, but because of its unfinished state, there were some blocking bugs and I had to quickly remake everything in VS2015. Probably the bugs will get solved once the full version of VS2017 will be released in 7th of March 2017. I might update that project later on.*
-
-*Update: Did it! Will have to clean up and keep only one version.*
-
 ## Functional requirements
 
 ### As a registered user I can
@@ -72,13 +62,14 @@ Below you can read about some specifications and technical details and requireme
 ![Workloads part 1](/docs/images/vs1.png)
 ![Workloads part 2](/docs/images/vs2.png)
 
+*FYI: [Known issues with .NET Core in Visual Studio 2017](https://github.com/aspnet/Tooling/blob/master/known-issues-vs2017.md)*
+
+*More FYI: just for the fun of it, see below how many SEPARATE things you had to install if we would have continued with VS2015 :)*
 - ~~Visual Studio 2015 Community or Professional Edition with Update 3 (https://go.microsoft.com/fwlink/?LinkId=691978&clcid=0x409)~~
 - ~~Latest Azure SDK (2.9.6 current) (https://go.microsoft.com/fwlink/?LinkId=518003&clcid=0x409)~~
 - ~~SQL Server Data Tools for VS2015 (https://msdn.microsoft.com/mt186501)~~
 - ~~.NET Core tools preview for Visual Studio (1.0.1 tools Preview 2 current) (https://go.microsoft.com/fwlink/?LinkID=827546)~~
 - ~~latest version of Nuget package manager (https://www.nuget.org/)~~
-
-*FYI: [Known issues with .NET Core in Visual Studio 2017](https://github.com/aspnet/Tooling/blob/master/known-issues-vs2017.md)*
 
 ### Setup
 - open solution in VS
