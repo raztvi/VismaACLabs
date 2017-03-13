@@ -24,3 +24,5 @@ Write-Output "Downloaded version: "
 & "$cliPath" --version
 
 Write-Output "    Done."
+
+# this is a comment (dooh!)
