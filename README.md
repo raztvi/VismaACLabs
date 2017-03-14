@@ -1,4 +1,4 @@
-﻿# Visma AC Labs - Cloud Storage
+# Visma AC Labs - Cloud Storage
 
 ![build status](https://emilcraciun.visualstudio.com/_apis/public/build/definitions/f6381654-59b1-4043-bd5f-3c9a9e740d98/1/badge)
 
