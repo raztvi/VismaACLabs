@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{D32ABD18-AAD9-40A1-9926-F5D9C4585080}"
 	ProjectSection(SolutionItems) = preProject
 		..\docs\ASP.NET-Core-Fundamentals-quiz-questions.md = ..\docs\ASP.NET-Core-Fundamentals-quiz-questions.md
+		..\docs\CourseOutline.md = ..\docs\CourseOutline.md
 		..\LICENSE = ..\LICENSE
 		nuget.config = nuget.config
 		..\README.md = ..\README.md

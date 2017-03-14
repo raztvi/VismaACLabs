@@ -8,6 +8,8 @@ The purpose of this application is to make an introduction into ASP.NET Core, Mi
 
 Additional references and resources can be found [here](/docs/References.md). 
 
+Also, if it helps, the course outline can be found [here](/docs/CourseOutline.md).
+
 Below you can read about some specifications and technical details and requirements.
 
 ## Functional requirements
@@ -78,7 +80,10 @@ Below you can read about some specifications and technical details and requireme
 - open solution in VS
 - CTRL + Q and search for Package Manager Console
 - once opened select the Data project as the default project (second dropdown)
-- run the following command: Update-Database
+- run the following command: 
+```
+Update-Database
+```
 - that's it, just make sure the CloudStorage project is selected as the default one, hit F5 and enjoy! (VS should restore all missing packages automatically)
 
 **Note: this will NOT be deployable to Linux because of it's dependency to WindowsAzure.Storage nuget package**
