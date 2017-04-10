@@ -3,24 +3,24 @@
     ViewBag.Title = "Login";
 }
 
-<h2>Login</h2>
-
-<form method="post" asp-antiforgery="true">
+<form method="post" asp-antiforgery="true" class="form-signin">
+    <h2 class="form-signin-heading">Login</h2>
     <div asp-validation-summary="ModelOnly"></div>
     <div>
-        <label asp-for="Username"></label>
-        <input asp-for="Username"/>
+        <label asp-for="Username" class="sr-only"></label>
+        <input asp-for="Username" class="form-control"/>
         <span asp-validation-for="Username"></span>
     </div>
     <div>
-        <label asp-for="Password"></label>
-        <input asp-for="Password"/>
+        <label asp-for="Password" class="sr-only"></label>
+        <input asp-for="Password" class="form-control"/>
         <span asp-validation-for="Password"></span>
     </div>
-    <div>
-        <label asp-for="RememberMe"></label>
-        <input asp-for="RememberMe"/>
-        <span asp-validation-for="RememberMe"></span>
+    <div class="checkbox">
+        <label>
+            <input asp-for="RememberMe" />
+            Remember me
+        </label>
     </div>
-    <input type="submit" value="Login"/>
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
 </form>
