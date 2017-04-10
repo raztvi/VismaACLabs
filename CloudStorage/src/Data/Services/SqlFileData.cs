@@ -37,6 +37,15 @@ namespace Data.Services
             return _context.FileInfos.Find(id);
         }
 
+        public IEnumerable<FileInfo> Search(string term, string companyId = null)
+        {
+            var tmp = _context.FileInfos.Where(_ => _.FileName.ToLowerInvariant().Contains(term));
+            return string.IsNullOrWhiteSpace(companyId)
+                ? tmp
+                : ((IEnumerable<FileInfo>) tmp).Where(
+                    _ => companyId.Equals(_.ContainerName, StringComparison.OrdinalIgnoreCase));
+        }
+
         public IEnumerable<FileInfo> GetAll(string companyId = null)
         {
             return string.IsNullOrWhiteSpace(companyId) ? _context.FileInfos :

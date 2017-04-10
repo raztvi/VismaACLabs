@@ -52,6 +52,11 @@ namespace CloudStorage.Services.Implementation
         {
         }
 
+        public IEnumerable<FileInfo> Search(string term, string companyId = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Delete(FileInfo fileInfo)
         {
             throw new NotImplementedException();

@@ -11,5 +11,6 @@ namespace Core.Services
         FileInfo Add(FileInfo file);
         void Delete(FileInfo fileInfo);
         void Commit();
+        IEnumerable<FileInfo> Search(string term, string companyId = null);
     }
 }

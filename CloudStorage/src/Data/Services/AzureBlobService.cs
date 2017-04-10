@@ -152,7 +152,8 @@ namespace Data.Services
             // get and check container reference
             var container = _blobClient.GetContainerReference(containerName);
             if (!await container.ExistsAsync())
-                throw new ArgumentException($"Container {container} does not exist");
+                //throw new ArgumentException($"Container {container} does not exist");
+                return 0;
 
             var folder = container.GetDirectoryReference(folderPath);
             var folderSize = (await
@@ -177,7 +178,8 @@ namespace Data.Services
             // get and check container reference
             var container = _blobClient.GetContainerReference(containerName);
             if (!await container.ExistsAsync())
-                throw new ArgumentException($"Container {container} does not exist");
+                //throw new ArgumentException($"Container {container} does not exist");
+                return 0;
 
             var containerSize = (await
                     container.ListBlobsSegmentedAsync(string.Empty, true, BlobListingDetails.All, null, null, null, null))
