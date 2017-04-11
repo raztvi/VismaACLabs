@@ -8,6 +8,8 @@ namespace Data.Seed
     {
         private readonly CloudStorageDbContext _context;
 
+        private readonly string _fileDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sagittis augue eget diam laoreet feugiat. Phasellus elementum scelerisque molestie. Curabitur consectetur porta arcu sit amet ullamcorper.";
+
         public CloudStorageSeedData(CloudStorageDbContext context)
         {
             _context = context;
@@ -61,7 +63,8 @@ namespace Data.Seed
                     ContentType = FileContentType.Invoice,
                     FileName = "Demo invoice.pdf",
                     FileSizeInBytes = 1234,
-                    ContainerName = companyId
+                    ContainerName = companyId,
+                    Description = _fileDescription
                 };
 
                 var fileInfo2 = new FileInfo
@@ -69,7 +72,8 @@ namespace Data.Seed
                     ContentType = FileContentType.Report,
                     FileName = "Bug report.csv",
                     FileSizeInBytes = 1234,
-                    ContainerName = companyId
+                    ContainerName = companyId,
+                    Description = _fileDescription
                 };
 
                 var fileInfo3 = new FileInfo
@@ -77,7 +81,8 @@ namespace Data.Seed
                     ContentType = FileContentType.Selfie,
                     FileName = "My last fire show.jpg",
                     FileSizeInBytes = 1234,
-                    ContainerName = companyId
+                    ContainerName = companyId,
+                    Description = _fileDescription
                 };
 
                 var fileInfo4 = new FileInfo
@@ -85,7 +90,8 @@ namespace Data.Seed
                     ContentType = FileContentType.Voucher,
                     FileName = "Something.png",
                     FileSizeInBytes = 1234,
-                    ContainerName = companyId
+                    ContainerName = companyId,
+                    Description = _fileDescription
                 };
 
                 var fileInfo5 = new FileInfo
@@ -93,7 +99,8 @@ namespace Data.Seed
                     ContentType = FileContentType.Other,
                     FileName = "MyNotes.txt",
                     FileSizeInBytes = 1234,
-                    ContainerName = companyId
+                    ContainerName = companyId,
+                    Description = _fileDescription
                 };
 
                 await _context.FileInfos.AddRangeAsync(fileInfo1, fileInfo2, fileInfo3, fileInfo4, fileInfo5);

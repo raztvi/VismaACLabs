@@ -9,9 +9,10 @@ using Core.Entities;
 namespace Data.Migrations
 {
     [DbContext(typeof(CloudStorageDbContext))]
-    partial class CloudStorageDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170411121845_FileInfoAddDescriptionAndReadOnly")]
+    partial class FileInfoAddDescriptionAndReadOnly
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")

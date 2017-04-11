@@ -10,5 +10,7 @@ namespace Core.Entities
         public FileContentType ContentType { get; set; }
         public string FileContentType { get; set; }
         public string ContainerName { get; set; }
+        public string Description { get; set; }
+        public bool ReadOnly { get; set; }
     }
 }

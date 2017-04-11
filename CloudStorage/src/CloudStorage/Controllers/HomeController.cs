@@ -88,23 +88,24 @@ namespace CloudStorage.Controllers
                     using (var fileStream = model.UploadedFile.OpenReadStream())
                     {
                         await
-                            _blobService.UploadBlobFromStream(containerName, model.FileName, fileStream,
+                            _blobService.UploadBlobFromStream(containerName, model.UploadedFile.FileName, fileStream,
                                 model.UploadedFile.ContentType, false);
                     }
-
                     var file = new FileInfo
                     {
                         ContentType = model.ContentType,
-                        FileName = model.FileName,
+                        FileName = model.UploadedFile.FileName,
                         FileContentType = model.UploadedFile.ContentType,
                         FileSizeInBytes = model.UploadedFile.Length,
-                        ContainerName = containerName
+                        ContainerName = containerName,
+                        Description = model.Description,
+                        ReadOnly = model.ReadOnly
                     };
 
                     _fileData.Add(file);
                     _fileData.Commit();
 
-                    SendFileNotification(FileOperations.Uploaded, model.FileName, user.CompanyId.ToString());
+                    SendFileNotification(FileOperations.Uploaded, model.UploadedFile.FileName, user.CompanyId.ToString());
 
                     return RedirectToAction(nameof(Details), new {id = file.Id});
                 }
@@ -120,7 +121,7 @@ namespace CloudStorage.Controllers
                 return RedirectToAction(nameof(Index));
 
             var companyId = GetNonAdminUserCompanyId();
-            if (!companyId.IsNullOrWhiteSpace() && !model.ContainerName.Equals(companyId, StringComparison.OrdinalIgnoreCase))
+            if (!companyId.IsNullOrWhiteSpace() && !model.ContainerName.Equals(companyId, StringComparison.OrdinalIgnoreCase) || model.ReadOnly)
             {
                 return RedirectToAction(nameof(AccountController.AccessDenied), nameof(AccountController).GetControllerName(),
                     new { returnUrl = Request.Path });
@@ -136,7 +137,8 @@ namespace CloudStorage.Controllers
             var fileInfo = _fileData.Get(id);
 
             var companyId = GetNonAdminUserCompanyId();
-            if (!companyId.IsNullOrWhiteSpace() && !fileInfo.ContainerName.Equals(companyId, StringComparison.OrdinalIgnoreCase))
+            if (!companyId.IsNullOrWhiteSpace() && !fileInfo.ContainerName.Equals(companyId, StringComparison.OrdinalIgnoreCase)
+                || fileInfo.ReadOnly)
             {
                 return RedirectToAction(nameof(AccountController.AccessDenied), nameof(AccountController).GetControllerName(),
                     new { returnUrl = Request.Path });
@@ -144,11 +146,12 @@ namespace CloudStorage.Controllers
 
             if (ModelState.IsValid)
             {
-                fileInfo.FileName = model.FileName;
+                fileInfo.Description = model.Description;
                 fileInfo.ContentType = model.ContentType;
+                fileInfo.ReadOnly = model.ReadOnly;
                 _fileData.Commit();
 
-                SendFileNotification(FileOperations.ModifiedMetadata, model.FileName,
+                SendFileNotification(FileOperations.ModifiedMetadata, fileInfo.FileName,
                     User.Claims.FirstOrDefault(_ => _.Type.Equals(AuthConstants.CompanyClaim)).Value);
 
                 return RedirectToAction(nameof(Details), new {id = fileInfo.Id});
@@ -195,7 +198,9 @@ namespace CloudStorage.Controllers
             }
 
             var companyId = GetNonAdminUserCompanyId();
-            if (!companyId.IsNullOrWhiteSpace() && (string.IsNullOrWhiteSpace(file.ContainerName) || !file.ContainerName.Equals(companyId, StringComparison.OrdinalIgnoreCase)))
+            if (!companyId.IsNullOrWhiteSpace() && (string.IsNullOrWhiteSpace(file.ContainerName) || 
+                !file.ContainerName.Equals(companyId, StringComparison.OrdinalIgnoreCase))
+                || file.ReadOnly)
             {
                 return RedirectToAction(nameof(AccountController.AccessDenied), nameof(AccountController).GetControllerName(),
                     new { returnUrl = Request.Path });
@@ -212,7 +217,8 @@ namespace CloudStorage.Controllers
             if (file != null)
             {
                 var companyId = GetNonAdminUserCompanyId();
-                if (!companyId.IsNullOrWhiteSpace() && !file.ContainerName.Equals(companyId, StringComparison.OrdinalIgnoreCase))
+                if (!companyId.IsNullOrWhiteSpace() && !file.ContainerName.Equals(companyId, StringComparison.OrdinalIgnoreCase)
+                    || file.ReadOnly)
                 {
                     return RedirectToAction(nameof(AccountController.AccessDenied), nameof(AccountController).GetControllerName(),
                         new { returnUrl = Request.Path });

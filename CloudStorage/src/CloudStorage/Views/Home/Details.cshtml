@@ -17,8 +17,33 @@
 
 <div class="row">
     <div class="col-lg-12">
+        <h4>Description</h4>
+        <p>@Model.Description</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
         <h4>File size in bytes</h4>
         <p>@Model.FileSizeInBytes</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h4>Read only</h4>
+        <p>
+            @{
+                if (Model.ReadOnly)
+                {
+                    <strong>yes</strong>
+                }
+                else
+                {
+                    <strong>no</strong>
+                }
+            }
+        </p>
     </div>
 </div>
 
