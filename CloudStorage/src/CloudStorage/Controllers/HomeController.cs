@@ -39,12 +39,15 @@ namespace CloudStorage.Controllers
         }
 
         // GET: /<controller>/
-        public IActionResult Index()
+        public IActionResult Index(string query = null)
         {
             var model = new HomePageViewModel
             {
-                FileInfos = _fileData.GetAll(GetNonAdminUserCompanyId()),
-                Message = _greeter.GetGreeting()
+                FileInfos = string.IsNullOrWhiteSpace(query) ?
+                    _fileData.GetAll(GetNonAdminUserCompanyId()) :
+                    _fileData.Search(query),
+                Message = _greeter.GetGreeting(),
+                Query = query
             };
 
             return View(model);
