@@ -1,11 +1,37 @@
 ﻿@model Company
 
-<h1>@Model.Name</h1>
-<div>Id: @Model.Id</div>
-<div>Contact email: @Model.ContactEmail</div>
-<div>Contact phone: @Model.ContactPhoneNumber</div>
-<div>Main address: @Model.MainAddress</div>
+<div class="page-header">
+    <h1>@Model.Name</h1>
+</div>
 
-<div>
+<div class="row">
+    <div class="col-lg-12">
+        <h4>Id</h4>
+        <p>@Model.Id</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h4>Contact email</h4>
+        <p>@Model.ContactEmail</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h4>Contact phone</h4>
+        <p>@Model.ContactPhoneNumber</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h4>Main address</h4>
+        <p>@Model.MainAddress</p>
+    </div>
+</div>
+
+<div >
     <a asp-action="Index">Back</a>
 </div>

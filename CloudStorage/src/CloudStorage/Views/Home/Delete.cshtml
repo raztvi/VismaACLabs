@@ -4,16 +4,33 @@
     ViewBag.Title = Model.FileName;
 }
 
-<h1>Are you sure you want to delete the following file: "@Model.FileName"?</h1>
-<div>Id: @Model.Id</div>
-<div>File size in bytes: @Model.FileSizeInBytes</div>
-
-<form method="post" asp-action="Delete">
-    <input type="hidden" asp-for="Id" value="@Model.Id"/>
-    <input type="submit" value="Yes" class="btn btn-primary"/>
-    <a asp-action="Index" class="btn btn-primary">No</a>
-</form>
-
-<div>
-    <a asp-action="@nameof(HomeController.Index)">Home</a>
+<div class="page-header">
+    <h1>Are you sure you want to delete the following file: "@Model.FileName"?</h1>
 </div>
+<div class="row">
+    <div class="col-lg-12">
+        <h4>Id</h4>
+        <p>@Model.Id</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h4>File size in bytes</h4>
+        <p>@Model.FileSizeInBytes</p>
+    </div>
+</div>
+
+<form method="post" asp-action="Delete" class="form-edit">
+    <input type="hidden" asp-for="Id" value="@Model.Id" />
+    
+    <div class="form-group">
+        <label class="control-label"></label>
+        <div class="col-md-6">
+            <input type="submit" value="Yes" class="btn btn-danger btn-block" />
+        </div>
+        <div class="col-md-6">
+            <a asp-action="@nameof(HomeController.Index)" class="btn btn-default btn-block">No</a>
+        </div>
+    </div>
+</form>

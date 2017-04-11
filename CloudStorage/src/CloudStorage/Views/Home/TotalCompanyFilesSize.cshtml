@@ -1,5 +1,31 @@
 ﻿@model long
 
-<div>
-    <h2>Total size of all company's files: @Model (B) | @(Model/1024) (KB) | @(Model/1024/1024) (MB) | @(Model/1024/1024/1024) (GB)</h2>
+<div class="page-header">
+    <h1>Storage usage</h1>
+</div>
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">Total size of all company's files</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>B</th>
+                <th>KB</th>
+                <th>MB</th>
+                <th>GB</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>@Model</td>
+                <td>@(Model / 1024)</td>
+                <td>@(Model / 1024 / 1024)</td>
+                <td>@(Model / 1024 / 1024 / 1024)</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

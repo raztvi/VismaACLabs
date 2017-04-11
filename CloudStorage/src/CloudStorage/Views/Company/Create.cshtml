@@ -1,35 +1,42 @@
 ﻿@model CreateCompanyViewModel
 
-<div>
+<div class="page-header text-center">
     <h1>Create</h1>
+</div>
+
+<div>
     <div>
-        <form method="post" asp-action="Create" asp-antiforgery="true">
+        <form method="post" asp-action="Create" asp-antiforgery="true" class="form-edit">
             <div class="form-group">
-                <label asp-for="Name"></label>
-                <input type="text" asp-for="Name"/>
+                <label asp-for="Name" class="control-label"></label>
+                <input type="text" asp-for="Name" class="form-control" placeholder="Name"/>
                 <span asp-validation-for="Name"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ContactEmail"></label>
-                <input type="email" asp-for="ContactEmail"/>
+                <label asp-for="ContactEmail" class="control-label"></label>
+                <input type="email" asp-for="ContactEmail" class="form-control" placeholder="Contact Email" />
                 <span asp-validation-for="ContactEmail"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ContactPhoneNumber"></label>
-                <input type="tel" asp-for="ContactPhoneNumber"/>
+                <label asp-for="ContactPhoneNumber" class="control-label"></label>
+                <input type="tel" asp-for="ContactPhoneNumber" class="form-control" placeholder="Contact Phone Number" />
                 <span asp-validation-for="ContactPhoneNumber"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MainAddress"></label>
-                <input type="text" asp-for="MainAddress"/>
+                <label asp-for="MainAddress" class="control-label"></label>
+                <input type="text" asp-for="MainAddress" class="form-control" placeholder="Main Address" />
                 <span asp-validation-for="MainAddress"></span>
             </div>
+            
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary"/>
+                <label class="control-label"></label>
+                <div class="col-md-6">
+                    <input type="submit" value="Create" class="btn btn-primary btn-block" />
+                </div>
+                <div class="col-md-6">
+                    <a asp-action="Index" class="btn btn-default btn-block">Cancel</a>
+                </div>
             </div>
         </form>
-    </div>
-    <div>
-        <a asp-action="Index">Back</a>
     </div>
 </div>

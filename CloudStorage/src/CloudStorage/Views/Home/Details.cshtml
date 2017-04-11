@@ -4,10 +4,24 @@
     ViewBag.Title = Model.FileName;
 }
 
-<h1>@Model.FileName</h1>
-<div>Id: @Model.Id</div>
-<div>File size in bytes: @Model.FileSizeInBytes</div>
+<div class="page-header">
+    <h1>@Model.FileName</h1>
+</div>
 
-<div>
-    <a asp-action="@nameof(HomeController.Index)">Home</a>
+<div class="row">
+    <div class="col-lg-12">
+        <h4>Id</h4>
+        <p>@Model.Id</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h4>File size in bytes</h4>
+        <p>@Model.FileSizeInBytes</p>
+    </div>
+</div>
+
+<div class="row">
+    <a class="col-lg-12" asp-action="@nameof(HomeController.Index)">Home</a>
 </div>

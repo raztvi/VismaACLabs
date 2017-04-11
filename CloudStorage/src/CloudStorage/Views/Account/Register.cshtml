@@ -6,41 +6,45 @@
     ViewBag.Title = "Register";
 }
 
-<h1>Register</h1>
-<form asp-antiforgery="true" method="post">
+<div class="page-header text-center">
+    <h1>Register</h1>
+</div>
+
+<form asp-antiforgery="true" method="post" class="form-register">
     <div asp-validation-summary="ModelOnly"></div>
 
-    <div>
-        <label asp-for="Username"></label>
-        <input asp-for="Username"/>
-        <span asp-validation-for="Username"></span>
+    <div class="form-group">
+        <label asp-for="Username" class="control-label"></label>
+        <input asp-for="Username" class="form-control" placeholder="Username"/>
+        <span asp-validation-for="Username" class="error form-group"></span>
     </div>
 
     <div>
-        <label asp-for="Email"></label>
-        <input asp-for="Email"/>
-        <span asp-validation-for="Email"></span>
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email"  class="form-control" placeholder="Email"/>
+        <span asp-validation-for="Email" class="error form-group"></span>
     </div>
 
     <div>
-        <label asp-for="CompanyId"></label>
-        <select asp-for="CompanyId" asp-items="@(new SelectList(CompanyData.GetAll(), nameof(Company.Id), nameof(Company.Name)))"></select>
-        <span asp-validation-for="Password"></span>
+        <label asp-for="CompanyId" class="control-label"></label>
+        <select asp-for="CompanyId" class="form-control" asp-items="@(new SelectList(CompanyData.GetAll(), nameof(Company.Id), nameof(Company.Name)))"></select>
+        <span asp-validation-for="Password" class="error form-group"></span>
     </div>
 
     <div>
-        <label asp-for="Password"></label>
-        <input asp-for="Password"/>
-        <span asp-validation-for="Password"></span>
+        <label asp-for="Password" class="control-label"></label>
+        <input asp-for="Password" class="form-control" placeholder="Password"/>
+        <span asp-validation-for="Password" class="error form-group"></span>
     </div>
 
     <div>
-        <label asp-for="ConfirmPassword"></label>
-        <input asp-for="ConfirmPassword"/>
-        <span asp-validation-for="ConfirmPassword"></span>
+        <label asp-for="ConfirmPassword" class="control-label"></label>
+        <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm password" />
+        <span asp-validation-for="ConfirmPassword" class="error form-group"></span>
     </div>
 
-    <div>
-        <input type="submit" value="Register"/>
+    <div class="form-group">
+        <label class="control-label"></label>
+        <input type="submit" value="Register" class="btn btn-primary btn-lg btn-block" id="register"/>
     </div>
 </form>

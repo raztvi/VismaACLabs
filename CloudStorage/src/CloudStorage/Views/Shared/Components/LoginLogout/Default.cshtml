@@ -1,18 +1,22 @@
 ﻿@if (User.Identity.IsAuthenticated)
 {
-    <div class="row">
-        <div class="col-md-6">
-            <span>Hello, @User.Identity.Name</span>
-        </div>
-        <div class="col-md-6">
-            <form method="post" asp-controller="Account" asp-action="Logout" asp-antiforgery="true">
-                <input class="btn btn-default" type="submit" value="Logout" />
-            </form>
-        </div>
-    </div>
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a id="user-welcome">Hello, @User.Identity.Name</a>
+        </li>
+        <li>
+            <a asp-controller="Account" asp-action="Logout" id="logout">Logout</a>
+        </li>
+    </ul>
 }
 else
 {
-    <a asp-controller="Account" class="btn btn-default" asp-action="Register">Register</a>
-    <a asp-controller="Account" class="btn btn-default" asp-action="Login">Login</a>
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a asp-controller="Account" asp-action="Register" id="register">Register</a>
+        </li>
+        <li>
+            <a asp-controller="Account" asp-action="Login" id="login">Login</a>
+        </li>
+    </ul>
 }

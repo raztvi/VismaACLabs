@@ -189,8 +189,13 @@ namespace CloudStorage.Controllers
         {
             var file = _fileData.Get(id);
 
+            if (file == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
             var companyId = GetNonAdminUserCompanyId();
-            if (!companyId.IsNullOrWhiteSpace() && !file.ContainerName.Equals(companyId, StringComparison.OrdinalIgnoreCase))
+            if (!companyId.IsNullOrWhiteSpace() && (string.IsNullOrWhiteSpace(file.ContainerName) || !file.ContainerName.Equals(companyId, StringComparison.OrdinalIgnoreCase)))
             {
                 return RedirectToAction(nameof(AccountController.AccessDenied), nameof(AccountController).GetControllerName(),
                     new { returnUrl = Request.Path });

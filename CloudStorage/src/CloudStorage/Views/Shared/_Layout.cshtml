@@ -26,24 +26,26 @@
 
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">Cloud Storage</a>
             </div>
-            <div id="navbar" class="navbar-collapse collapse in">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a asp-controller="Company" asp-action="Index">Companies</a>
-                    </li>
-                </ul>
-            </div><!--/.nav-collapse -->
-            <div class="nav navbar-nav navbar-right">
-                @await Component.InvokeAsync("LoginLogout")
-            </div>
+
+            <ul class="nav navbar-nav">
+                <li>
+                    <a asp-controller="Company" asp-action="Index">Companies</a>
+                </li>
+                <li>
+                    <a asp-controller="Home" asp-action="TotalCompanyFilesSize">Usage</a>
+                </li>
+            </ul>
+
+            @await Component.InvokeAsync("LoginLogout")
+
         </div>
     </nav>
-    <div class="container">
+    <div class="container" id="main-container">
         @RenderBody()
     </div>
 
