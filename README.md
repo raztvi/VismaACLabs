@@ -23,6 +23,7 @@ Below you can read about some specifications and technical details and requireme
 - [x] delete a file from the above list
 - [x] upload a new file along with metadata
 - [x] be notified in real time when someone from my company uploads a new file
+- [x] search for files
 
 
 ### As an admin I can
@@ -51,7 +52,7 @@ Below you can read about some specifications and technical details and requireme
 - [x] seed users, roles, claims
 - [x] remove unused usings
 - [x] refactor code where needed *// more or less*
-- [ ] ~~maybe make sure all of the UI looks decent (default / basic style the shit out of everything)~~ *I suck at this, I tried my "best"...*
+- [x] maybe make sure all of the UI looks decent
 
 
 ## Technical details
