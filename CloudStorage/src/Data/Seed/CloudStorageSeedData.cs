@@ -61,7 +61,7 @@ namespace Data.Seed
                 var fileInfo1 = new FileInfo
                 {
                     ContentType = FileContentType.Invoice,
-                    FileName = "Demo invoice.pdf",
+                    FileName = "(dummy!) Demo invoice.pdf",
                     FileSizeInBytes = 1234,
                     ContainerName = companyId,
                     Description = _fileDescription
@@ -70,7 +70,7 @@ namespace Data.Seed
                 var fileInfo2 = new FileInfo
                 {
                     ContentType = FileContentType.Report,
-                    FileName = "Bug report.csv",
+                    FileName = "(dummy!) Bug report.csv",
                     FileSizeInBytes = 1234,
                     ContainerName = companyId,
                     Description = _fileDescription
@@ -79,7 +79,7 @@ namespace Data.Seed
                 var fileInfo3 = new FileInfo
                 {
                     ContentType = FileContentType.Selfie,
-                    FileName = "My last fire show.jpg",
+                    FileName = "(dummy!) My last fire show.jpg",
                     FileSizeInBytes = 1234,
                     ContainerName = companyId,
                     Description = _fileDescription
@@ -88,7 +88,7 @@ namespace Data.Seed
                 var fileInfo4 = new FileInfo
                 {
                     ContentType = FileContentType.Voucher,
-                    FileName = "Something.png",
+                    FileName = "(dummy!) Something.png",
                     FileSizeInBytes = 1234,
                     ContainerName = companyId,
                     Description = _fileDescription
@@ -97,7 +97,7 @@ namespace Data.Seed
                 var fileInfo5 = new FileInfo
                 {
                     ContentType = FileContentType.Other,
-                    FileName = "MyNotes.txt",
+                    FileName = "(dummy!) MyNotes.txt",
                     FileSizeInBytes = 1234,
                     ContainerName = companyId,
                     Description = _fileDescription

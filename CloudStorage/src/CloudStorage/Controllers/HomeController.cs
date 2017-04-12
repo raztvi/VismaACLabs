@@ -228,7 +228,17 @@ namespace CloudStorage.Controllers
                 }
 
                 if (!string.IsNullOrWhiteSpace(file.ContainerName) && !string.IsNullOrWhiteSpace(file.FileName))
-                    await _blobService.DeleteBlob(file.ContainerName, file.FileName);
+                {
+                    try
+                    {
+                        await _blobService.DeleteBlob(file.ContainerName, file.FileName);
+                    }
+                    catch (ArgumentException)
+                    {
+                        // no container, fine because it's probably seed data
+                    }
+                }
+
                 _fileData.Delete(file);
                 _fileData.Commit();
                 SendFileNotification(FileOperations.Deleted, file.FileName,
