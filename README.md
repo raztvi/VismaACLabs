@@ -85,6 +85,8 @@ Below you can read about some specifications and technical details and requireme
 ```
 Update-Database
 ```
+- expand the src > CloudStorage > Dependencies nodes, right click on the Bower folder and click on Restore Packages
+- *or as an alternative for the above step, open up the CloudStorage project folder in Command Prompt (make sure the bower.json file is in that folder) and type in the following command: bower install*
 - that's it, just make sure the CloudStorage project is selected as the default one, hit F5 and enjoy! (VS should restore all missing packages automatically)
 
 **Note: this will NOT be deployable to Linux because of it's dependency to WindowsAzure.Storage nuget package**
