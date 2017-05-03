@@ -60,6 +60,7 @@ namespace CloudStorage
                 options => options.UseSqlServer(Configuration.GetConnectionString("CloudStorage")));
 
             services.AddTransient<CloudStorageSeedData>();
+
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<CloudStorageDbContext>();
 
