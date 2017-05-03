@@ -55,8 +55,10 @@ namespace CloudStorage
             services.AddScoped<IFileData, SqlFileData>();
             services.AddScoped<IBlobService, AzureBlobService>();
             services.AddScoped<ICompanyData, SqlCompanyData>();
+
             services.AddDbContext<CloudStorageDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("CloudStorage")));
+
             services.AddTransient<CloudStorageSeedData>();
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<CloudStorageDbContext>();
