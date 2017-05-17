@@ -8,7 +8,9 @@ namespace Data.Seed
     {
         private readonly CloudStorageDbContext _context;
 
-        private readonly string _fileDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sagittis augue eget diam laoreet feugiat. Phasellus elementum scelerisque molestie. Curabitur consectetur porta arcu sit amet ullamcorper.";
+        private readonly string _fileDescription1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sagittis augue eget diam laoreet feugiat. Phasellus elementum scelerisque molestie. Curabitur consectetur porta arcu sit amet ullamcorper.";
+        private readonly string _fileDescription2 = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.";
+
 
         public CloudStorageSeedData(CloudStorageDbContext context)
         {
@@ -41,13 +43,20 @@ namespace Data.Seed
                 };
                 var comp3 = new Company
                 {
-                    ContactEmail = "vesimir@wolfs.org",
+                    ContactEmail = "vesimir@wolfs2.org",
                     ContactPhoneNumber = "1234567890",
                     MainAddress = "Kaer Morhen",
                     Name = "School of the Wolf"
                 };
+                var comp4 = new Company
+                {
+                    ContactEmail = "vlad@ap.net",
+                    ContactPhoneNumber = "49231244",
+                    MainAddress = "Mark Twa",
+                    Name = "Dumdum"
+                };
 
-                await _context.Companies.AddRangeAsync(comp1, comp2, comp3);
+                await _context.Companies.AddRangeAsync(comp1, comp2, comp3, comp4);
                 await _context.SaveChangesAsync();
             }
         }
@@ -64,25 +73,25 @@ namespace Data.Seed
                     FileName = "(dummy!) Demo invoice.pdf",
                     FileSizeInBytes = 1234,
                     ContainerName = companyId,
-                    Description = _fileDescription
+                    Description = _fileDescription1
                 };
 
                 var fileInfo2 = new FileInfo
                 {
                     ContentType = FileContentType.Report,
-                    FileName = "(dummy!) Bug report.csv",
+                    FileName = "(dummy2!) Bug report.csv",
                     FileSizeInBytes = 1234,
                     ContainerName = companyId,
-                    Description = _fileDescription
+                    Description = _fileDescription2
                 };
-
+                
                 var fileInfo3 = new FileInfo
                 {
                     ContentType = FileContentType.Selfie,
                     FileName = "(dummy!) My last fire show.jpg",
                     FileSizeInBytes = 1234,
                     ContainerName = companyId,
-                    Description = _fileDescription
+                    Description = _fileDescription1
                 };
 
                 var fileInfo4 = new FileInfo
@@ -91,7 +100,7 @@ namespace Data.Seed
                     FileName = "(dummy!) Something.png",
                     FileSizeInBytes = 1234,
                     ContainerName = companyId,
-                    Description = _fileDescription
+                    Description = _fileDescription2
                 };
 
                 var fileInfo5 = new FileInfo
@@ -100,7 +109,7 @@ namespace Data.Seed
                     FileName = "(dummy!) MyNotes.txt",
                     FileSizeInBytes = 1234,
                     ContainerName = companyId,
-                    Description = _fileDescription
+                    Description = _fileDescription1
                 };
 
                 await _context.FileInfos.AddRangeAsync(fileInfo1, fileInfo2, fileInfo3, fileInfo4, fileInfo5);

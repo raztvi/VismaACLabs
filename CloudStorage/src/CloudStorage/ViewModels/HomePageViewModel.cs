@@ -11,5 +11,7 @@ namespace CloudStorage.ViewModels
         [Display(Name = "Search")]
         public string Query { get; set; }
         public IEnumerable<FileInfo> FileInfos { get; set; }
+
+
     }
 }
