@@ -57,6 +57,16 @@ namespace CloudStorage.Services.Implementation
             throw new NotImplementedException();
         }
 
+        public IEnumerable<FileInfo> SearchDescription(string term, string companyId = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<FileInfo> SearchByAll(string term, string term2, string companyId = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Delete(FileInfo fileInfo)
         {
             throw new NotImplementedException();

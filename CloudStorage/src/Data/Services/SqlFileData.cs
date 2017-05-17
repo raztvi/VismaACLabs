@@ -39,10 +39,32 @@ namespace Data.Services
 
         public IEnumerable<FileInfo> Search(string term, string companyId = null)
         {
-            var tmp = _context.FileInfos.Where(_ => _.FileName.ToLowerInvariant().Contains(term));
+            var tmp = _context.FileInfos.Where(_ => _.FileName.ToLowerInvariant().Contains(term.ToLowerInvariant()));
+            return string.IsNullOrWhiteSpace(companyId)
+                ? tmp
+                : ((IEnumerable<FileInfo>)tmp).Where(
+                    _ => companyId.Equals(_.ContainerName, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public IEnumerable<FileInfo> SearchDescription(string term, string companyId = null)
+        {
+            var tmp = _context.FileInfos.Where(_ => _.Description.ToLowerInvariant().Contains(term.ToLowerInvariant()));
+                                            
             return string.IsNullOrWhiteSpace(companyId)
                 ? tmp
                 : ((IEnumerable<FileInfo>) tmp).Where(
+                    _ => companyId.Equals(_.ContainerName, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public IEnumerable<FileInfo> SearchByAll(string term, string term2, string companyId = null)
+        {
+            var tmp = _context.FileInfos.Where(_ => _.FileName.ToLowerInvariant().Contains(term.ToLowerInvariant())
+                                                && _.Description.ToLowerInvariant().Contains(term2.ToLowerInvariant())
+                                                );
+
+            return string.IsNullOrWhiteSpace(companyId)
+                ? tmp
+                : ((IEnumerable<FileInfo>)tmp).Where(
                     _ => companyId.Equals(_.ContainerName, StringComparison.OrdinalIgnoreCase));
         }
 

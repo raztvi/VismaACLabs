@@ -17,14 +17,26 @@
 <form asp-action="Index" method="get">
     <div class="form-group">
         <label asp-for="Query" class="control-label"></label>
-        <input asp-for="Query" class="form-control" placeholder="Search in file names. Hit enter to search." autofocus/>
-        <input type="submit" value="Find" class="btn btn-default" id="find-button"/>
+        <input asp-for="Query" class="form-control" placeholder="Search in file names. Hit enter to search." />
+        
+        
+        <div></div>
+        <label asp-for="Query2" class="control-label"></label>
+        <input asp-for="Query2" class="form-control" placeholder="Search in description. Hit enter to search." autofocus/>
     </div>
+    <input type="submit" value="Find" class="btn btn-default" id="find-button-description" />
+
 </form>
+
+
+
+
+
 
 <div class="row">
     @if (Model.FileInfos != null && Model.FileInfos.Any())
     {
+        
         <div>
             @foreach (var fileInfo in Model.FileInfos)
             {
@@ -33,6 +45,10 @@
         </div>
     }
 </div>
+
+
+
+
 
 <div class="row">
     <a asp-action="Upload" class="btn btn-info btn-lg btn-block" id="upload-file">Upload</a>

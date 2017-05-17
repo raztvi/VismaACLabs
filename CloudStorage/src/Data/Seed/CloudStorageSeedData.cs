@@ -71,11 +71,11 @@ namespace Data.Seed
                 {
                     ContentType = FileContentType.Invoice,
                     FileName = "(dummy!) Demo invoice.pdf",
-                    FileSizeInBytes = 1234,
+                    FileSizeInBytes = 1235,
                     ContainerName = companyId,
                     Description = _fileDescription1
                 };
-
+                
                 var fileInfo2 = new FileInfo
                 {
                     ContentType = FileContentType.Report,
@@ -105,7 +105,7 @@ namespace Data.Seed
 
                 var fileInfo5 = new FileInfo
                 {
-                    ContentType = FileContentType.Other,
+                    ContentType = FileContentType.Voucher,
                     FileName = "(dummy!) MyNotes.txt",
                     FileSizeInBytes = 1234,
                     ContainerName = companyId,

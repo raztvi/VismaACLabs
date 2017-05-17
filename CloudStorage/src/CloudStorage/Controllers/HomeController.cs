@@ -38,20 +38,47 @@ namespace CloudStorage.Controllers
             _connectionManager = connectionManager;
         }
 
-        // GET: /<controller>/
-        public IActionResult Index(string query = null)
-        {
+        // GET: /<controller>/ 
+        // query->filename 
+        //query2->description
+        public IActionResult Index(string query = null, string query2 = null) 
+        {  
+            var result = _fileData.GetAll(GetNonAdminUserCompanyId());
+           /*easier solution
+             if (!string.IsNullOrWhiteSpace(query)) {
+                  result = result.Where(s => s.FileName.ToLowerInvariant().Contains(query.ToLowerInvariant()));
+             }
+             if (!string.IsNullOrWhiteSpace(query2)) {
+                result = result.Where(s => s.Description.ToLowerInvariant().Contains(query2.ToLowerInvariant()));
+             }
+             */
+
+                 if ( !string.IsNullOrWhiteSpace(query) && string.IsNullOrWhiteSpace(query2))
+               {// search only by name
+                   result = _fileData.Search(query);
+               }
+               else if ( !string.IsNullOrWhiteSpace(query2) && string.IsNullOrWhiteSpace(query))
+                   { // search only be description
+                   result = _fileData.SearchDescription(query2);
+                   }
+
+               else if ( !string.IsNullOrWhiteSpace(query) && !string.IsNullOrWhiteSpace(query2))
+                   {// search by both
+                   result = _fileData.SearchByAll(query, query2);
+                   } 
+
             var model = new HomePageViewModel
             {
-                FileInfos = string.IsNullOrWhiteSpace(query) ?
-                    _fileData.GetAll(GetNonAdminUserCompanyId()) :
-                    _fileData.Search(query),
+                FileInfos = result,
                 Message = _greeter.GetGreeting(),
-                Query = query
+                Query = query,
+                Query2 = query2
             };
 
             return View(model);
+   
         }
+
 
         public IActionResult Details(Guid id)
         {
@@ -81,8 +108,9 @@ namespace CloudStorage.Controllers
         public async Task<IActionResult> Upload(UploadViewModel model)
         {
             if ((model != null) && ModelState.IsValid)
-            {
+            { 
                 var user = await GetLoggedInUser();
+                
                 var containerName = user.CompanyId.ToString().ToLower();
                 await _blobService.CreateContainerIfNotExists(containerName);
 
@@ -102,7 +130,8 @@ namespace CloudStorage.Controllers
                         FileSizeInBytes = model.UploadedFile.Length,
                         ContainerName = containerName,
                         Description = model.Description,
-                        ReadOnly = model.ReadOnly
+                        ReadOnly = model.ReadOnly,
+                        //FileOwner = model.Description
                     };
 
                     _fileData.Add(file);

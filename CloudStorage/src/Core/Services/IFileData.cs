@@ -12,5 +12,7 @@ namespace Core.Services
         void Delete(FileInfo fileInfo);
         void Commit();
         IEnumerable<FileInfo> Search(string term, string companyId = null);
+        IEnumerable<FileInfo> SearchDescription(string term, string companyId = null);
+        IEnumerable<FileInfo> SearchByAll(string term, string term2, string companyId = null);
     }
 }

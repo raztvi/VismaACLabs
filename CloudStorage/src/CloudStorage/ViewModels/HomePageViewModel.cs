@@ -10,6 +10,10 @@ namespace CloudStorage.ViewModels
 
         [Display(Name = "Search")]
         public string Query { get; set; }
+
+        [Display(Name = "Search Description")]
+        public string Query2 { get; set; }
+
         public IEnumerable<FileInfo> FileInfos { get; set; }
 
 

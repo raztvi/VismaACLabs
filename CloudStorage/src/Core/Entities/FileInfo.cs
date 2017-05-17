@@ -11,6 +11,7 @@ namespace Core.Entities
         public string FileContentType { get; set; }
         public string ContainerName { get; set; }
         public string Description { get; set; }
+        //public string FileOwner { get; set; }
         public bool ReadOnly { get; set; }
     }
 }
