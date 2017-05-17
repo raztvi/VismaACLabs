@@ -26,7 +26,7 @@ namespace CloudStorage.Controllers
         private readonly IFileData _fileData;
         private readonly IGreeter _greeter;
         private ILogger<HomeController> _logger;
-
+        // added something useless
         public HomeController(IFileData fileData, IGreeter greeter, ILogger<HomeController> logger,
             IBlobService blobService,
             UserManager<User> userManager, IConnectionManager connectionManager) : base(userManager)
