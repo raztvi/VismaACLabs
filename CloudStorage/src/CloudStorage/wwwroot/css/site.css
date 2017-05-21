@@ -69,7 +69,9 @@
     margin: 0 auto;
 }
 
-
+#find-button-description {
+    visibility: hidden;
+}
 
 #notifications {
     padding-top: 20px;

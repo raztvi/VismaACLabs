@@ -5,6 +5,7 @@ using Core.Entities;
 using Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace CloudStorage.Controllers
 {
@@ -18,9 +19,26 @@ namespace CloudStorage.Controllers
             _companyData = companyData;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string QueryByName , string QueryByAddress)
         {
-            return View(_companyData.GetAll());
+            //to do: I have to do something so the search box doesn't clear and remembers the input
+            var companies = from c in _companyData.GetAll()
+                            select c;
+
+            if (!string.IsNullOrEmpty(QueryByName) && string.IsNullOrEmpty(QueryByAddress))
+            {//search by name
+                companies = companies.Where(s => s.Name.ToLowerInvariant().Contains(QueryByName.ToLowerInvariant()));
+            }
+            else if (string.IsNullOrEmpty(QueryByName) && !string.IsNullOrEmpty(QueryByAddress))
+            {//search by adress
+                companies = companies.Where(s => s.MainAddress.ToLowerInvariant().Contains(QueryByAddress.ToLowerInvariant()));
+            }
+            else if ( !string.IsNullOrEmpty(QueryByName) && !string.IsNullOrEmpty(QueryByAddress))
+            {//search by all
+                companies = companies.Where(s => s.Name.ToLowerInvariant().Contains(QueryByName.ToLowerInvariant()) && s.MainAddress.ToLowerInvariant().Contains(QueryByAddress.ToLowerInvariant()));
+            }
+
+            return View(companies);
         }
 
         public IActionResult Details(Guid id)

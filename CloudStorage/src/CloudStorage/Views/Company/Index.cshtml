@@ -4,6 +4,17 @@
     <h1>Companies</h1>
 </div>
 
+<form asp-controller="Company" asp-action="Index" method="get">
+    <p>
+        <div class="form-group">
+        Name: <input type="text" name="QueryByName" class="form-control" placeholder="Search after company name. Hit enter to search.">
+        <div></div>
+        Adress: <input type="text" name="QueryByAddress" class="form-control" placeholder="Search after company address.Hit enter to search.">
+        </div>
+        <input type="submit" value="Search" class="btn btn-default" />
+    </p>
+</form>
+
 <div>
     @if (Model != null)
     {
