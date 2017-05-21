@@ -28,10 +28,13 @@
 
 </form>
 
-
-
-
-
+<div>
+    <label>@Html.ActionLink("Sort by Name", "Index", new { sortOrder = ViewBag.NameSortParm })</label>
+    <div></div>
+    <label>@Html.ActionLink("Sort by Size", "Index", new { sortOrder = ViewBag.SizeSortParm })</label>
+    <div></div>
+    <label>@Html.ActionLink("Sort by Type", "Index", new { sortOrder = ViewBag.ContentSortParm })</label>
+</div>
 
 <div class="row">
     @if (Model.FileInfos != null && Model.FileInfos.Any())

@@ -41,19 +41,24 @@ namespace CloudStorage.Controllers
         // GET: /<controller>/ 
         // query->filename 
         //query2->description
-        public IActionResult Index(string query = null, string query2 = null) 
+        public IActionResult Index(string query = null, string query2 = null, string sortOrder = null) 
         {  
             var result = _fileData.GetAll(GetNonAdminUserCompanyId());
-           /*easier solution
-             if (!string.IsNullOrWhiteSpace(query)) {
-                  result = result.Where(s => s.FileName.ToLowerInvariant().Contains(query.ToLowerInvariant()));
-             }
-             if (!string.IsNullOrWhiteSpace(query2)) {
-                result = result.Where(s => s.Description.ToLowerInvariant().Contains(query2.ToLowerInvariant()));
-             }
-             */
+            /*easier solution
+              if (!string.IsNullOrWhiteSpace(query)) {
+                   result = result.Where(s => s.FileName.ToLowerInvariant().Contains(query.ToLowerInvariant()));
+              }
+              if (!string.IsNullOrWhiteSpace(query2)) {
+                 result = result.Where(s => s.Description.ToLowerInvariant().Contains(query2.ToLowerInvariant()));
+              }
+              */
+              // create functionality for sort
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.SizeSortParm = sortOrder == "Size" ? "size_desc" : "Size";
+            ViewBag.ContentSortParm = sortOrder == "Type" ? "type_desc" : "Type";
 
-                 if ( !string.IsNullOrWhiteSpace(query) && string.IsNullOrWhiteSpace(query2))
+
+            if ( !string.IsNullOrWhiteSpace(query) && string.IsNullOrWhiteSpace(query2))
                {// search only by name
                    result = _fileData.Search(query);
                }
@@ -65,7 +70,29 @@ namespace CloudStorage.Controllers
                else if ( !string.IsNullOrWhiteSpace(query) && !string.IsNullOrWhiteSpace(query2))
                    {// search by both
                    result = _fileData.SearchByAll(query, query2);
-                   } 
+                   }
+
+            switch (sortOrder)
+            {//creating cases for sort
+                case "name_desc":
+                    result = result.OrderByDescending(_ => _.FileName);
+                    break;
+                case "size_desc":
+                    result = result.OrderByDescending(_ => _.FileSizeInBytes);
+                    break;
+                case "Size":
+                    result = result.OrderBy(_ => _.FileSizeInBytes);
+                    break;
+                case "type_desc":
+                    result = result.OrderByDescending(_ => _.ContentType);
+                    break;
+                case "Type":
+                    result = result.OrderBy(_ => _.ContentType);
+                    break;
+                default:
+                    result = result.OrderBy(_ => _.FileName);
+                    break;
+            };
 
             var model = new HomePageViewModel
             {
@@ -74,6 +101,10 @@ namespace CloudStorage.Controllers
                 Query = query,
                 Query2 = query2
             };
+
+            
+
+           
 
             return View(model);
    

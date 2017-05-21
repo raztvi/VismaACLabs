@@ -21,9 +21,11 @@ namespace CloudStorage.Controllers
 
         public IActionResult Index(string QueryByName , string QueryByAddress)
         {
+            //ViewBag.NameSortParm = String.IsNullOrEmpty
             //to do: I have to do something so the search box doesn't clear and remembers the input
             var companies = from c in _companyData.GetAll()
                             select c;
+            //companies = companies.OrderBy(c => c.Name);
 
             if (!string.IsNullOrEmpty(QueryByName) && string.IsNullOrEmpty(QueryByAddress))
             {//search by name
@@ -37,6 +39,8 @@ namespace CloudStorage.Controllers
             {//search by all
                 companies = companies.Where(s => s.Name.ToLowerInvariant().Contains(QueryByName.ToLowerInvariant()) && s.MainAddress.ToLowerInvariant().Contains(QueryByAddress.ToLowerInvariant()));
             }
+
+            companies = companies.OrderBy(c => c.Name);
 
             return View(companies);
         }

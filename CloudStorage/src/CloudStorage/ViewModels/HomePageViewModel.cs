@@ -8,10 +8,10 @@ namespace CloudStorage.ViewModels
     {
         public string Message { get; set; }
 
-        [Display(Name = "Search")]
+        [Display(Name = "Search by Name")]
         public string Query { get; set; }
 
-        [Display(Name = "Search Description")]
+        [Display(Name = "Search by Description")]
         public string Query2 { get; set; }
 
         public IEnumerable<FileInfo> FileInfos { get; set; }
