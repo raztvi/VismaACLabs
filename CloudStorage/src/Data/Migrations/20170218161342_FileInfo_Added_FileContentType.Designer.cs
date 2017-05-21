@@ -51,6 +51,8 @@ namespace Data.Migrations
 
                     b.Property<long>("FileSizeInBytes");
 
+                    b.Property<string>("FileOwner");
+
                     b.HasKey("Id");
 
                     b.ToTable("FileInfos");

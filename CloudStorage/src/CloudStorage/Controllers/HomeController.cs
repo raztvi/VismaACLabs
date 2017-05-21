@@ -57,23 +57,25 @@ namespace CloudStorage.Controllers
             ViewBag.SizeSortParm = sortOrder == "Size" ? "size_desc" : "Size";
             ViewBag.ContentSortParm = sortOrder == "Type" ? "type_desc" : "Type";
 
+           
 
             if ( !string.IsNullOrWhiteSpace(query) && string.IsNullOrWhiteSpace(query2))
                {// search only by name
-                   result = _fileData.Search(query);
+                result = _fileData.Search(query);
                }
                else if ( !string.IsNullOrWhiteSpace(query2) && string.IsNullOrWhiteSpace(query))
                    { // search only be description
-                   result = _fileData.SearchDescription(query2);
+                result = _fileData.SearchDescription(query2);
                    }
 
                else if ( !string.IsNullOrWhiteSpace(query) && !string.IsNullOrWhiteSpace(query2))
                    {// search by both
-                   result = _fileData.SearchByAll(query, query2);
+                result = _fileData.SearchByAll(query, query2);
                    }
 
             switch (sortOrder)
             {//creating cases for sort
+             
                 case "name_desc":
                     result = result.OrderByDescending(_ => _.FileName);
                     break;
@@ -94,6 +96,7 @@ namespace CloudStorage.Controllers
                     break;
             };
 
+
             var model = new HomePageViewModel
             {
                 FileInfos = result,
@@ -102,12 +105,19 @@ namespace CloudStorage.Controllers
                 Query2 = query2
             };
 
-            
 
-           
 
-            return View(model);
+
+            return View( model);
    
+        }
+
+        public IActionResult MyFiles()
+        {
+            var result = _fileData.GetAll(GetNonAdminUserCompanyId());
+
+            return View(result);
+
         }
 
 
@@ -162,7 +172,7 @@ namespace CloudStorage.Controllers
                         ContainerName = containerName,
                         Description = model.Description,
                         ReadOnly = model.ReadOnly,
-                        //FileOwner = model.Description
+                        FileOwner = user.UserName
                     };
 
                     _fileData.Add(file);

@@ -14,7 +14,9 @@ namespace Data.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     ContentType = table.Column<int>(nullable: false),
                     FileName = table.Column<string>(nullable: true),
-                    FileSizeInBytes = table.Column<int>(nullable: false)
+                    FileSizeInBytes = table.Column<int>(nullable: false),
+                    FileOwner = table.Column<string>(nullable: false)
+                    
                 },
                 constraints: table => { table.PrimaryKey("PK_FileInfos", x => x.Id); });
         }

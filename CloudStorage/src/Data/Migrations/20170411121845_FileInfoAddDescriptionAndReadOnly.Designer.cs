@@ -55,6 +55,8 @@ namespace Data.Migrations
 
                     b.Property<bool>("ReadOnly");
 
+                    b.Property<string>("FileOwner");
+
                     b.HasKey("Id");
 
                     b.ToTable("FileInfos");

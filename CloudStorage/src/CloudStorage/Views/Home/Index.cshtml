@@ -17,16 +17,21 @@
 <form asp-action="Index" method="get">
     <div class="form-group">
         <label asp-for="Query" class="control-label"></label>
-        <input asp-for="Query" class="form-control" placeholder="Search in file names. Hit enter to search." />
+        <input asp-for="Query" class="form-control" placeholder="Search in file names. Hit enter to search." autofocus />
         
         
         <div></div>
         <label asp-for="Query2" class="control-label"></label>
-        <input asp-for="Query2" class="form-control" placeholder="Search in description. Hit enter to search." autofocus/>
+        <input asp-for="Query2" class="form-control" placeholder="Search in description. Hit enter to search." />
     </div>
     <input type="submit" value="Find" class="btn btn-default" id="find-button-description" />
 
+ 
 </form>
+
+<div class="row">
+    <a asp-action="MyFiles" class="btn btn-info btn-lg btn-block" id="my-files">My Files</a>
+</div>
 
 <div>
     <label>@Html.ActionLink("Sort by Name", "Index", new { sortOrder = ViewBag.NameSortParm })</label>
@@ -35,6 +40,8 @@
     <div></div>
     <label>@Html.ActionLink("Sort by Type", "Index", new { sortOrder = ViewBag.ContentSortParm })</label>
 </div>
+
+
 
 <div class="row">
     @if (Model.FileInfos != null && Model.FileInfos.Any())
