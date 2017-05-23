@@ -7,11 +7,14 @@
 <form asp-controller="Company" asp-action="Index" method="get">
     <p>
         <div class="form-group">
-        Name: <input type="text" name="QueryByName" class="form-control" placeholder="Search after company name. Hit enter to search.">
-        <div></div>
-        Adress: <input type="text" name="QueryByAddress" class="form-control" placeholder="Search after company address.Hit enter to search.">
-        </div>
-        <input type="submit" value="Search" class="btn btn-default" />
+        Name: <input type="text" name="QueryByName" value="@ViewBag.currentName" class="form-control" placeholder="Search after company name. Hit enter to search.">
+            <label>
+               
+                </label>
+            <div></div>
+            Adress: <input type="text" name="QueryByAddress" value="@ViewBag.currentAddress" class="form-control" placeholder="Search after company address.Hit enter to search.">
+</div>
+        <input type="submit" value="Search" class="btn btn-default" id="find-button-description" />
     </p>
 </form>
 
@@ -52,6 +55,8 @@
     }
 
 </div>
+
+
 <div>
     <a asp-action="Create" class="btn btn-info btn-lg btn-block" id="create-company">Create</a>
 </div>
