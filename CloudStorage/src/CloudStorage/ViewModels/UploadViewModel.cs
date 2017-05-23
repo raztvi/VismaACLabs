@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Core.Entities;
 using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+
 
 namespace CloudStorage.ViewModels
 {
@@ -15,9 +17,10 @@ namespace CloudStorage.ViewModels
         public FileContentType ContentType { get; set; }
 
         [Display(Name = "File")]
-        public IFormFile UploadedFile { get; set; }
+        public List<IFormFile> UploadedFile { get; set; }
 
         [Display(Name = "Read only")]
         public bool ReadOnly { get; set; }
+
     }
 }

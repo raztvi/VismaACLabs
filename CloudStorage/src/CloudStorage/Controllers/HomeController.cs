@@ -13,6 +13,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR.Infrastructure;
 using Microsoft.Extensions.Logging;
 using CloudStorage.Helpers;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -146,29 +149,32 @@ namespace CloudStorage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upload(UploadViewModel model)
+        public async Task<IActionResult> Upload(UploadViewModel model, IList<IFormFile> files   )
         {
             if ((model != null) && ModelState.IsValid)
-            { 
+            {
                 var user = await GetLoggedInUser();
-                
+
                 var containerName = user.CompanyId.ToString().ToLower();
                 await _blobService.CreateContainerIfNotExists(containerName);
 
-                if ((model.UploadedFile != null) && (model.UploadedFile.Length > 0))
+                foreach (var formFile in files)
+              { 
+
+                if ((formFile != null) && (formFile.Length > 0))
                 {
-                    using (var fileStream = model.UploadedFile.OpenReadStream())
+                    using (var fileStream = formFile.OpenReadStream())
                     {
                         await
-                            _blobService.UploadBlobFromStream(containerName, model.UploadedFile.FileName, fileStream,
-                                model.UploadedFile.ContentType, false);
+                            _blobService.UploadBlobFromStream(containerName, formFile.FileName, fileStream,
+                                formFile.ContentType, false);
                     }
                     var file = new FileInfo
                     {
                         ContentType = model.ContentType,
-                        FileName = model.UploadedFile.FileName,
-                        FileContentType = model.UploadedFile.ContentType,
-                        FileSizeInBytes = model.UploadedFile.Length,
+                        FileName = formFile.FileName,
+                        FileContentType = formFile.ContentType,
+                        FileSizeInBytes = formFile.Length,
                         ContainerName = containerName,
                         Description = model.Description,
                         ReadOnly = model.ReadOnly,
@@ -178,10 +184,14 @@ namespace CloudStorage.Controllers
                     _fileData.Add(file);
                     _fileData.Commit();
 
-                    SendFileNotification(FileOperations.Uploaded, model.UploadedFile.FileName, user.CompanyId.ToString());
+                    SendFileNotification(FileOperations.Uploaded, formFile.FileName, user.CompanyId.ToString());
 
-                    return RedirectToAction(nameof(Details), new {id = file.Id});
+                    
                 }
+
+              }
+
+                return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
@@ -241,6 +251,12 @@ namespace CloudStorage.Controllers
 
             return View(size);
         }
+
+        /*public async Task<IActionResult> TemporaryLink()
+        {
+            var user = await GetLoggedInUser();
+            var url = await _blobService.GetTemporaryUrl(user.CompanyId.ToString(),);
+        }*/
 
         [HttpGet]
         public async Task<FileResult> Download(Guid id)
