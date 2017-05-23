@@ -44,7 +44,7 @@ namespace CloudStorage.Controllers
         // GET: /<controller>/ 
         // query->filename 
         //query2->description
-        public IActionResult Index(string query = null, string query2 = null, string sortOrder = null) 
+        public IActionResult Index(string query = null, string query2 = null, string sortOrder = null , string currentQuery = null , string currentQuery2 = null) 
         {  
             var result = _fileData.GetAll(GetNonAdminUserCompanyId());
             /*easier solution
@@ -60,6 +60,19 @@ namespace CloudStorage.Controllers
             ViewBag.SizeSortParm = sortOrder == "Size" ? "size_desc" : "Size";
             ViewBag.ContentSortParm = sortOrder == "Type" ? "type_desc" : "Type";
 
+            // remembering search terms for sort
+            if ( query == null)
+            {
+                query = currentQuery;
+            }
+
+            if (query2 == null)
+            {
+                query2 = currentQuery2;
+            }
+
+            ViewBag.CurrentQuery = query;
+            ViewBag.CurrentQuery2 = query2;
            
 
             if ( !string.IsNullOrWhiteSpace(query) && string.IsNullOrWhiteSpace(query2))
@@ -105,11 +118,11 @@ namespace CloudStorage.Controllers
                 FileInfos = result,
                 Message = _greeter.GetGreeting(),
                 Query = query,
-                Query2 = query2
+                Query2 = query2,
+
+                
+               
             };
-
-
-
 
             return View( model);
    

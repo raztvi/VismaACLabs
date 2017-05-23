@@ -17,28 +17,29 @@
 <form asp-action="Index" method="get">
     <div class="form-group">
         <label asp-for="Query" class="control-label"></label>
-        <input asp-for="Query" class="form-control" placeholder="Search in file names. Hit enter to search." autofocus />
+        <input asp-for="Query" value="@ViewBag.currentQuery"  class="form-control" placeholder="Search in file names. Hit enter to search." autofocus />
         
         
         <div></div>
         <label asp-for="Query2" class="control-label"></label>
-        <input asp-for="Query2" class="form-control" placeholder="Search in description. Hit enter to search." />
+        <input asp-for="Query2" value="@ViewBag.currentQuery2"class="form-control" placeholder="Search in description. Hit enter to search." />
     </div>
     <input type="submit" value="Find" class="btn btn-default" id="find-button-description" />
 
  
 </form>
 
-<div class="row">
+@* Old way to show owner's uploaded files.Replaced with menu item
+    <div class="row">
     <a asp-action="MyFiles" class="btn btn-info btn-lg btn-block" id="my-files">My Files</a>
-</div>
+</div>*@
 
 <div>
-    <label>@Html.ActionLink("Sort by Name", "Index", new { sortOrder = ViewBag.NameSortParm })</label>
+    <label>@Html.ActionLink("Sort by Name", "Index", new { sortOrder = ViewBag.NameSortParm , currentQuery = ViewBag.CurrentQuery , currentQuery2 = ViewBag.CurrentQuery2 } )</label>
     <div></div>
-    <label>@Html.ActionLink("Sort by Size", "Index", new { sortOrder = ViewBag.SizeSortParm })</label>
+    <label>@Html.ActionLink("Sort by Size", "Index", new { sortOrder = ViewBag.SizeSortParm , currentQuery = ViewBag.CurrentQuery , currentQuery2 = ViewBag.CurrentQuery2 })</label>
     <div></div>
-    <label>@Html.ActionLink("Sort by Type", "Index", new { sortOrder = ViewBag.ContentSortParm })</label>
+    <label>@Html.ActionLink("Sort by Type", "Index", new { sortOrder = ViewBag.ContentSortParm, currentQuery = ViewBag.CurrentQuery, currentQuery2 = ViewBag.CurrentQuery2 }  )</label>
 </div>
 
 

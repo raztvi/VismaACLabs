@@ -29,9 +29,12 @@
                         <td>@file.ContentType</td>
                         <td>@file.Description</td>
                         <td>@file.FileSizeInBytes</td>
+                         <td><a class="btn btn-primary "  asp-action="Download" asp-route-id="@file.Id" id="download-file-@file.Id">Download</a>
+</td>
                         </tr>
-                        }
-                 }
+                    }
+                }
+                
 
                 
             </tbody>
